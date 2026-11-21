@@ -1,0 +1,65 @@
+name: Align v2.3.11 tag and release notes with corrected source
+
+on:
+  push:
+    paths:
+      - '.github/workflows/align-v2-3-11.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  align:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Update existing v2.3.11 tag to corrected source without changing version
+        shell: bash
+        run: |
+          set -euo pipefail
+          current_tag_sha=$(git ls-remote --refs --tags origin refs/tags/v2.3.11 | awk '{ print $1 }')
+          test -n "$current_tag_sha"
+          git tag -f v2.3.11 "$(git rev-parse HEAD)"
+          git push --force-with-lease="refs/tags/v2.3.11:$current_tag_sha" origin refs/tags/v2.3.11
+      - name: Update the existing v2.3.11 release description
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/v2.3.11.md <<'NOTES'
+          # Aikeyboost SEO&GEO v2.3.11
+
+          面向中国 WordPress 站长、中小企业、外贸独立站及 SEO/GEO 从业者的免费开源插件，整合中国搜索引擎 SEO、国际技术 SEO、多语言关联和 AI 搜索内容优化辅助。
+
+          ## 核心功能
+          - 百度及中国搜索引擎相关配置、百度主动提交、robots.txt 与抓取管理。
+          - SEO Title、Meta Description、Canonical、XML Sitemap、Schema.org、404 监控与重定向。
+          - GEO 内容诊断、企业实体信息、FAQ、事实来源与 llms.txt。
+          - 多语言 hreflang 页面关联及 SEO/GEO 日常优化工作台。
+
+          ## v2.3.11 同版本修复说明
+          - 修复网站页脚品牌署名位置：在 GeneratePress 中直接加入原有的版权和备案信息模块，在已有内容下方居中显示，不再单独生成浅色页脚区域。
+          - 其他主题尽可能把署名加入已有页脚容器，不独立创建新的可见模块。
+          - 保留原有版权、ICP/公安备案信息；仅调整署名位置与样式，所有 SEO/GEO 功能及数据库版本 17 不变。
+          - PHP 8.0、8.2、8.3 语法检查与署名行为回归测试通过。
+
+          **[下载 WordPress 完整 ZIP 安装包（v2.3.11）](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.11/aikey-seo-geo-v2.3.11.zip)**
+
+          文件 SHA-256：`fafd946ce004c7b5b941d2132425298a0b710eb6e8ff21fd7ef7035c4b026af9`
+
+          环境要求：WordPress 6.2+、PHP 8.0+。请下载 Releases 页面中的安装 ZIP，而不是自动生成的 Source code ZIP。同版本替换安装时，请先备份，然后清理页面与静态资源缓存。
+
+          安装提示：未经修改的 GitHub 发行版会在网站前台显示 Aikeyboost 品牌链接，后台不提供关闭选项；GPL-2.0-or-later 许可证仍允许用户修改与重新分发源码。该发行版未提交 WordPress.org 官方目录。
+          NOTES
+          gh release edit v2.3.11 \
+            --title 'Aikeyboost SEO&GEO v2.3.11 — WordPress SEO / GEO 免费开源插件' \
+            --notes-file /tmp/v2.3.11.md \
+            --latest
+          gh release view v2.3.11 --json tagName,isDraft,isPrerelease,assets \
+            | jq -e '.tagName == "v2.3.11" and (.isDraft == false) and (.isPrerelease == false) and (any(.assets[]; .name == "aikey-seo-geo-v2.3.11.zip"))'
