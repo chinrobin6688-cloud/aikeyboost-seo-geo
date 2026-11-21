@@ -8,7 +8,7 @@
 
 ### 安装
 
-1. 在 [Releases](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) 下载完整插件 ZIP（不要直接使用 GitHub 自动生成的仓库 Source code ZIP）。
+1. 在 [Releases](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) 下载，或[直接下载完整 v2.3.7 安装包](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/raw/refs/heads/main/dist/aikey-seo-geo-v2.3.7.zip)（不要将 GitHub 自动生成的 Source code ZIP 当作插件包）。
 2. WordPress 后台 → 插件 → 安装插件 → 上传插件。
 3. 激活插件，进入 **SEO&GEO → 基础设置** 检查选项。
 4. 初次使用，请确认网站只由一个 SEO 插件负责输出前台元数据；仅在明确需要时启用“强制接管”。
@@ -25,7 +25,7 @@
 
 Aikeyboost SEO&GEO is a free WordPress plugin for traditional SEO and AI-search-readiness (GEO), covering page metadata, XML sitemaps, Schema.org structured data, genuine multilingual page relationships, redirects, 404 diagnostics and optional provider integrations.
 
-Download the complete installable plugin ZIP from [GitHub Releases](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases). **Do not upload GitHub's automatically generated repository source archive**: the WordPress plugin must be packaged with the `aikey-seo-geo/` root directory. WordPress >= 6.2 and PHP >= 8.0 are required.
+Download the installable [v2.3.7 plugin ZIP](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/raw/refs/heads/main/dist/aikey-seo-geo-v2.3.7.zip) or visit [GitHub Releases](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases). **Do not upload GitHub's automatically generated repository source archive**: the WordPress plugin must be packaged with the `aikey-seo-geo/` root directory. WordPress >= 6.2 and PHP >= 8.0 are required.
 
 New installations do not force SEO takeover or insert developer attribution without opt-in. Existing saved site settings are preserved on upgrades. See [`aikey-seo-geo/readme.txt`](aikey-seo-geo/readme.txt) for external services and privacy disclosure.
 
