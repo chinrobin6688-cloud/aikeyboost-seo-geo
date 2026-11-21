@@ -1,17 +1,26 @@
-/* Independent end-of-page credit. Do not alter the theme footer or legal notices. */
+/* Keep the credit INSIDE the theme's existing footer/copyright area. */
+.site-info .inside-site-info {
+    flex-wrap: wrap;
+}
 .aikey-seo-geo-footer-credit {
     box-sizing: border-box;
     display: block;
+    flex: 0 0 100%;
     width: 100%;
     clear: both;
-    margin: 0;
-    padding: 10px 16px 12px;
-    border-top: 1px solid rgba(0, 0, 0, 0.07);
-    background: #f8f9fb;
-    color: #667085;
+    margin: 6px 0 0;
+    padding: 0 0 2px;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    color: inherit;
     font-size: 12px;
+    font-weight: 400;
     line-height: 1.6;
     text-align: center;
+}
+.site-info .inside-site-info > .aikey-seo-geo-footer-credit {
+    order: 99;
 }
 .aikey-seo-geo-footer-credit a {
     color: inherit;
