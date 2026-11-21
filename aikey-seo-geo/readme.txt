@@ -4,7 +4,7 @@ Tags: seo, sitemap, schema, multilingual, ai-search
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.3.8
+Stable tag: 2.3.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,7 +52,7 @@ No. It links genuine existing translations and manages SEO language metadata; it
 No. Basic SEO, schema and sitemap functions run without an external Aikeyboost account. Some optional integrations need provider credentials or approved site verification.
 
 = Will an Aikeyboost link appear on my visitors' pages? =
-On a new installation, the optional attribution setting starts enabled. It only replaces matching existing footer credits where supported by the active theme; it does not create a new footer on every theme. The administrator can disable it in Basic Settings. Existing saved disabled choices remain disabled after updating.
+On a new installation, the optional attribution setting starts enabled. When enabled, the plugin adds a separate line containing the Aikeyboost attribution near the end of the page; it no longer replaces any existing theme copyright text. On GeneratePress the line is added inside the theme footer; other themes receive the line through the standard WordPress wp_footer hook. The plugin outputs the attribution only once per page even if both hooks fire. The administrator can disable it in Basic Settings without affecting SEO/GEO. Existing saved disabled choices remain disabled after updating.
 
 = Can this plugin coexist with another SEO plugin? =
 On new installations, Aikeyboost SEO takeover is enabled by default even if another SEO plugin is detected. This may duplicate SEO tags or sitemap output. Disable takeover or the other SEO plugin to avoid conflicts. Existing saved takeover choices are respected.
@@ -84,11 +84,17 @@ Screenshots are planned for the WordPress.org assets repository after obtaining 
 
 == GitHub public distribution note ==
 
-This GitHub source edition intentionally keeps the v2.3.6 stable defaults: the two optional output settings (forced SEO takeover and front-end attribution) start ON for new installations. They are individually configurable, and explicit saved choices remain unchanged on upgrades. The attribution only replaces existing matching credits on supported themes; it does not insert a new footer on all sites.
+This GitHub source edition intentionally keeps the v2.3.6 stable defaults: the two optional output settings (forced SEO takeover and front-end attribution) start ON for new installations. They are individually configurable, and explicit saved choices remain unchanged on upgrades. When enabled, the plugin outputs its own small attribution line; it does not replace the theme copyright or widget content. The output is limited to one instance per request and requires a theme that invokes the standard wp_footer hook or the GeneratePress footer hook.
 
 IMPORTANT: This edition is distributed via GitHub and must not be submitted unchanged to the WordPress.org Plugin Directory. WordPress.org requires visitor-facing credits and links to be OFF by default and opt-in. The default SEO takeover may conflict with other SEO plugins. Review these settings before using the plugin on a production site.
 
 == Changelog ==
+
+= 2.3.9 =
+* Render voluntary Aikeyboost attribution as a new independent line rather than replacing GeneratePress or widget copyright text.
+* Prefer GeneratePress footer insertion with one-time wp_footer fallback for other WordPress themes. Do not duplicate output if both hooks fire.
+* Load a tiny, isolated frontend CSS stylesheet only when attribution is enabled; preserve saved opt-outs.
+* Keep all v2.3.8 SEO/GEO features and database version 17 unchanged.
 
 = 2.3.8 =
 * Publish the complete v2.3.6 stable feature set on GitHub without any Pro-only extension.

@@ -1,1 +1,2 @@
 d3acdc180fb478b9e4ee6bb93c5d9e2dc037c9ac44a28513eb306bc9f39b219c  dist/aikey-seo-geo-v2.3.8.zip
+6844dda12677fadd7139a8cbc3e2e35665eeafcc817beddc302545930d438838  dist/aikey-seo-geo-v2.3.9.zip

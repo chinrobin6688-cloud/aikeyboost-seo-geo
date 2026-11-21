@@ -21,6 +21,7 @@ defined( 'ABSPATH' ) || exit;
 final class Plugin {
     private static ?self $instance = null;
     private bool $booted = false;
+    private static bool $footer_credit_rendered = false;
 
     public static function instance(): self {
         if ( null === self::$instance ) { self::$instance = new self(); }
@@ -53,30 +54,38 @@ final class Plugin {
     }
 
     /**
-     * Private distribution: frontend branding follows the stored site setting.
-     * New sites default on; any saved opt-out takes precedence.
+     * Add an independent, optional footer attribution without touching the
+     * theme's existing copyright, widgets or footer markup.
+     *
+     * GeneratePress exposes a dedicated hook inside its footer. Other themes,
+     * including block themes, use the standard wp_footer fallback. The shared
+     * guard prevents duplicate output when a theme fires both hooks.
      */
     public static function register_footer_credit(): void {
-        if ( ! (bool) Settings::get( 'show_footer_credit', false ) ) { return; }
-        add_filter( 'generate_copyright', array( self::class, 'footer_credit' ), 99 );
-        add_filter( 'widget_block_content', array( self::class, 'footer_credit' ), 20 );
+        if ( is_admin() || ! (bool) Settings::get( 'show_footer_credit', false ) ) { return; }
+        add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_footer_credit_style' ) );
+        add_action( 'generate_after_footer', array( self::class, 'render_footer_credit' ), 20 );
+        add_action( 'wp_footer', array( self::class, 'render_footer_credit' ), 20 );
     }
 
-    /** Replace matching existing attribution only while the site setting is enabled. */
-    public static function footer_credit( string $copyright ): string {
-        if ( ! (bool) Settings::get( 'show_footer_credit', false )
-            || false === stripos( $copyright, 'Built with' ) ) {
-            return $copyright;
+    public static function enqueue_footer_credit_style(): void {
+        if ( ! (bool) Settings::get( 'show_footer_credit', false ) ) { return; }
+        wp_enqueue_style(
+            'aikey-seo-geo-footer-credit',
+            AIKEY_SEO_GEO_URL . 'assets/css/footer-credit.css',
+            array(),
+            AIKEY_SEO_GEO_VERSION
+        );
+    }
+
+    public static function render_footer_credit(): void {
+        if ( self::$footer_credit_rendered || is_admin()
+            || ! (bool) Settings::get( 'show_footer_credit', false ) ) {
+            return;
         }
-        $credit = 'GEO services powered by <a href="https://aikeyboost.com/" rel="nofollow">Aikeyboost</a>';
-        $copyright = (string) preg_replace(
-            '~Built\s+with\s+(?:<a\b[^>]*>\s*)?GeneratePress(?:\s*</a>)?~i',
-            $credit, $copyright, 1
-        );
-        // Actual Footer Bar block: "Built with&nbsp;<a href=...>AI企帮</a>".
-        return (string) preg_replace(
-            '~Built\s+with(?:\s|&nbsp;)+<a href="https://aikeyboost\.com/">AI企帮</a>~u',
-            $credit, $copyright, 1
-        );
+        self::$footer_credit_rendered = true;
+        echo '<div class="aikey-seo-geo-footer-credit">GEO services powered by '
+            . '<a href="' . esc_url( 'https://aikeyboost.com/' ) . '" rel="nofollow">'
+            . esc_html( 'Aikeyboost' ) . '</a></div>';
     }
 }

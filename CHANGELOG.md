@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.3.9 — 2026-11-20
+
+- Optional Aikeyboost frontend credit now **adds a separate line** and never replaces theme copyright or footer widgets.
+- Uses GeneratePress `generate_after_footer` with a standard `wp_footer` fallback, guarded to output at most once per request.
+- Enqueues a small isolated CSS file only when the saved credit setting is enabled.
+- Preserves existing settings, all SEO/GEO features, PHP/WordPress support baseline and DB version 17. No Pro code added.
+- Adds a standalone footer hook regression smoke test (20 assertions).
+
 ## v2.3.8 — 2026-11-20
 
 - Publish the **entire original v2.3.6 private stable functionality**, with no Pro extension included.

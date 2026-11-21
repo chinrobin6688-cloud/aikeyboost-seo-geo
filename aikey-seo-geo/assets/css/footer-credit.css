@@ -1,0 +1,17 @@
+/* Optional footer attribution. No theme copyright text is modified. */
+.aikey-seo-geo-footer-credit {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 8px 16px 12px;
+    background: transparent;
+    color: inherit;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+}
+.aikey-seo-geo-footer-credit a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
