@@ -8,7 +8,7 @@ Aikeyboost SEO&GEO 是一款面向中国 WordPress 建站用户开发的免费�
 
 **核心功能无需购买 Pro 版本，也无需注册 Aikeyboost 账号。** 部分 AI 分析及第三方搜索服务需要用户自行配置相应的账号或 API 凭据。
 
-[免费下载完整插件](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/raw/refs/heads/main/dist/aikey-seo-geo-v2.3.10.zip) · [查看最新版本](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) · [查看开源许可证](LICENSE)
+[免费下载 WordPress 安装包（ZIP）](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.10/aikey-seo-geo-v2.3.10.zip) · [查看最新版本](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) · [查看开源许可证](LICENSE)
 
 ## 为什么开发这款插件？
 
@@ -141,12 +141,12 @@ Aikeyboost SEO&GEO 采用 **GPL-2.0-or-later** 开源许可证。
 
 环境要求：WordPress 6.2 或更高版本，PHP 8.0 或更高版本。
 
-1. [下载完整 WordPress 插件 ZIP](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/raw/refs/heads/main/dist/aikey-seo-geo-v2.3.10.zip)。
+1. [直接下载 WordPress 可安装 ZIP 文件](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.10/aikey-seo-geo-v2.3.10.zip)，保存原始 `.zip` 文件，不要解压。
 2. 进入 WordPress 后台「插件 → 安装插件 → 上传插件」。
 3. 上传 ZIP、安装并启用。
 4. 进入「SEO&GEO → 基础设置」，检查并调整适合自己网站的配置。
 
-请下载完整插件安装包，不要直接使用 GitHub 自动生成的仓库 Source code ZIP。
+**下载说明：** 上方下载链接指向 GitHub Release 的正式安装附件（`.zip`），不是源码文件夹，也不是 GitHub 自动生成的 Source code ZIP。请在 WordPress 后台直接上传 `.zip` 文件，不要先解压。若使用 Mac 的 Safari，下载后自动变成文件夹，请在「Safari → 设置 → 通用」关闭「下载后打开安全文件」，再重新下载；若已有正确的 `aikey-seo-geo` 插件文件夹，也可使用 macOS 的「压缩」功能重新生成 ZIP，确保 ZIP 内的顶层目录为 `aikey-seo-geo/`。
 
 ### 安装时需要注意
 
@@ -194,7 +194,7 @@ All included features are available under the GPL-2.0-or-later license. Optional
 
 **Requirements:** WordPress 6.2+, PHP 8.0+.
 
-[Download Plugin](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/raw/refs/heads/main/dist/aikey-seo-geo-v2.3.10.zip) · [Releases](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) · [License](LICENSE)
+[Download WordPress installer ZIP](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.10/aikey-seo-geo-v2.3.10.zip) · [Releases](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) · [License](LICENSE)
 
 *SEO and GEO tools can help improve website structure and content management, but they cannot guarantee search rankings, indexing, or mentions in AI-generated answers.*
 
