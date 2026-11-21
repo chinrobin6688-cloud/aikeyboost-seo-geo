@@ -54,16 +54,18 @@ final class Plugin {
     }
 
     /**
-     * Render the independent credit after theme footer markup and legal notices.
-     * WordPress themes call wp_footer immediately before the closing body tag;
-     * using its latest priority avoids inserting anything into footer content.
-     * We deliberately do not use GeneratePress footer hooks because they may
-     * run before custom footer widgets, copyright text or ICP information.
+     * GeneratePress executes generate_credits inside the existing footer's
+     * .inside-site-info copyright area. Appending at the last priority keeps
+     * other credits, ICP notices, and theme markup intact.
+     *
+     * Themes without that hook use a tiny DOM fallback which places the credit
+     * inside an existing footer; it never creates a standalone page section.
      */
     public static function register_footer_credit(): void {
         if ( is_admin() ) { return; }
         add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_footer_credit_style' ) );
-        add_action( 'wp_footer', array( self::class, 'render_footer_credit' ), PHP_INT_MAX );
+        add_action( 'generate_credits', array( self::class, 'render_footer_credit' ), PHP_INT_MAX );
+        add_action( 'wp_footer', array( self::class, 'render_footer_credit_fallback' ), PHP_INT_MAX );
     }
 
     public static function enqueue_footer_credit_style(): void {
@@ -75,13 +77,56 @@ final class Plugin {
         );
     }
 
+    /**
+     * Render inside GeneratePress's existing copyright/filing-information bar.
+     */
     public static function render_footer_credit(): void {
-        if ( self::$footer_credit_rendered || is_admin() ) {
-            return;
-        }
+        if ( self::$footer_credit_rendered || is_admin() ) { return; }
         self::$footer_credit_rendered = true;
         echo '<div class="aikey-seo-geo-footer-credit">GEO services powered by '
             . '<a href="' . esc_url( 'https://aikeyboost.com/' ) . '" rel="nofollow">'
             . esc_html( 'Aikeyboost' ) . '</a></div>';
+    }
+
+    /**
+     * Non-GeneratePress fallback: never print a visible footer block outside
+     * the actual theme footer. Attach into an existing copyright/footer node,
+     * and do nothing if the page supplies no such node.
+     */
+    public static function render_footer_credit_fallback(): void {
+        if ( self::$footer_credit_rendered || is_admin() ) { return; }
+        self::$footer_credit_rendered = true;
+        ?>
+        <script id="aikey-seo-geo-footer-credit-fallback">
+        (function () {
+            if (document.querySelector('.aikey-seo-geo-footer-credit')) { return; }
+            var selectors = [
+                '.site-info .inside-site-info',
+                'footer .footer-bottom',
+                'footer .footer-copyright',
+                'footer .copyright',
+                '.site-footer .site-info',
+                'footer.site-footer',
+                'footer[role="contentinfo"]',
+                'footer'
+            ];
+            var target = null;
+            for (var i = 0; i < selectors.length; i++) {
+                var matches = document.querySelectorAll(selectors[i]);
+                if (matches.length) { target = matches[matches.length - 1]; break; }
+            }
+            if (!target) { return; }
+            var block = document.createElement('div');
+            block.className = 'aikey-seo-geo-footer-credit';
+            block.appendChild(document.createTextNode('GEO services powered by '));
+            var link = document.createElement('a');
+            link.href = 'https://aikeyboost.com/';
+            link.rel = 'nofollow';
+            link.textContent = 'Aikeyboost';
+            block.appendChild(link);
+            target.appendChild(block);
+        }());
+        </script>
+        <?php
     }
 }
