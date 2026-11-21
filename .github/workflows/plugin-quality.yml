@@ -50,5 +50,5 @@ jobs:
           archive="${archives[0]}"
           unzip -t "$archive"
           unzip -Z1 "$archive" | grep -qx 'aikey-seo-geo/aikey-seo-geo.php'
-          embedded_version=$(unzip -p "$archive" aikey-seo-geo/aikey-seo-geo.php | sed -nE 's/^[[:space:]]*\\*[[:space:]]*Version:[[:space:]]*([0-9.]+).*/\\1/p' | head -n 1)
+          embedded_version=$(unzip -p "$archive" aikey-seo-geo/aikey-seo-geo.php | awk '/Version:/ { print $3; exit }')
           test "$(basename "$archive")" = "aikey-seo-geo-v${embedded_version}.zip"
