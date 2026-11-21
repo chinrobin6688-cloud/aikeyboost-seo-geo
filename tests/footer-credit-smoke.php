@@ -49,47 +49,56 @@ namespace {
         $credit_property->setValue( false );
     };
 
-    // Existing saved options must not affect the GitHub edition credit.
+    // GeneratePress: both the original credits and the new credit share the
+    // same .inside-site-info module, and the plugin is on a separate line.
     $reset();
     $plugin::register_footer_credit();
     check( 0 === $settings::$reads, 'Legacy setting unexpectedly consulted' );
-    foreach ( array( 'wp_footer', 'wp_enqueue_scripts' ) as $hook ) {
+    foreach ( array( 'generate_credits', 'wp_footer', 'wp_enqueue_scripts' ) as $hook ) {
         check( count( $GLOBALS['aikey_test_hooks'][ $hook ] ?? array() ) === 1, 'Missing hook: ' . $hook );
     }
-    check( ! isset( $GLOBALS['aikey_test_hooks']['generate_before_footer_content'] ), 'Wrong early GeneratePress hook remains' );
-    check( ! isset( $GLOBALS['aikey_test_hooks']['generate_after_footer'] ), 'Theme-specific hook must not render credit' );
-    check( ! isset( $GLOBALS['aikey_test_hooks']['generate_copyright'] ), 'Theme copyright filter registered' );
-    check( ! isset( $GLOBALS['aikey_test_hooks']['widget_block_content'] ), 'Widget content filter registered' );
-    check( PHP_INT_MAX === $GLOBALS['aikey_test_hooks']['wp_footer'][0]['priority'], 'Credit must run last in wp_footer' );
+    check( ! isset( $GLOBALS['aikey_test_hooks']['generate_before_footer_content'] ), 'Wrong early footer hook remains' );
+    check( ! isset( $GLOBALS['aikey_test_hooks']['generate_after_footer_content'] ), 'Wrong outer footer hook remains' );
+    check( ! isset( $GLOBALS['aikey_test_hooks']['generate_copyright'] ), 'Copyright filter must not be replaced' );
+    check( PHP_INT_MAX === $GLOBALS['aikey_test_hooks']['generate_credits'][0]['priority'], 'Credit must follow existing GeneratePress credits' );
 
-    // Both theme footer content and copyright / ICP-style notices must precede credit.
-    add_action( 'wp_footer', static function(): void {
-        echo '<span class="theme-credit">Original theme copyright</span>';
-        echo '<span class="icp-notice">ICP registration information</span>';
-    }, 20 );
+    add_action( 'generate_credits', static function (): void {
+        echo '<div class="copyright">© 2026 Original owner · ICP and police registration · Built with theme</div>';
+    }, 10 );
     ob_start();
-    echo '<footer>Business name, address and footer navigation</footer>';
+    echo '<footer class="site-info"><div class="inside-site-info">';
+    do_action( 'generate_credits' );
+    echo '</div></footer>';
     do_action( 'wp_footer' );
     $html = ob_get_clean();
-    check( substr_count( $html, 'class="aikey-seo-geo-footer-credit"' ) === 1, 'Duplicate credit' );
-    check( strpos( $html, 'Business name' ) < strpos( $html, 'aikey-seo-geo-footer-credit' ), 'Credit appeared above theme footer' );
-    check( strpos( $html, 'Original theme copyright' ) < strpos( $html, 'aikey-seo-geo-footer-credit' ), 'Credit appeared above theme copyright' );
-    check( strpos( $html, 'ICP registration information' ) < strpos( $html, 'aikey-seo-geo-footer-credit' ), 'Credit appeared above ICP notice' );
-    check( str_contains( $html, 'Original theme copyright' ), 'Theme attribution was erased' );
-    check( str_contains( $html, 'ICP registration information' ), 'ICP notice was erased' );
-    check( str_contains( $html, 'href="https://aikeyboost.com/" rel="nofollow"' ), 'Missing nofollow credit link' );
+    check( 1 === substr_count( $html, 'class="aikey-seo-geo-footer-credit"' ), 'GeneratePress credit is missing or duplicated' );
+    check( strpos( $html, 'Original owner' ) < strpos( $html, 'class="aikey-seo-geo-footer-credit"' ), 'Credit must be after existing copyright' );
+    check( strpos( $html, 'police registration' ) < strpos( $html, 'class="aikey-seo-geo-footer-credit"' ), 'Credit must follow registration details' );
+    check( strpos( $html, 'class="aikey-seo-geo-footer-credit"' ) < strpos( $html, '</div></footer>' ), 'Credit must be INSIDE copyright footer module' );
+    check( str_contains( $html, 'Built with theme' ), 'Original credits were replaced' );
+    check( ! str_contains( $html, 'id="aikey-seo-geo-footer-credit-fallback"' ), 'GeneratePress rendered a needless fallback script' );
+    check( str_contains( $html, 'href="https://aikeyboost.com/" rel="nofollow"' ), 'Missing attribution link' );
 
     do_action( 'wp_enqueue_scripts' );
-    check( 1 === count( $GLOBALS['aikey_test_styles'] ), 'Frontend style not enqueued' );
-    check( $GLOBALS['aikey_test_styles'][0]['version'] === '2.3.11', 'Stale CSS cache version' );
+    check( 1 === count( $GLOBALS['aikey_test_styles'] ), 'Footer CSS was not enqueued' );
+    check( '2.3.11' === $GLOBALS['aikey_test_styles'][0]['version'], 'Plugin version changed unexpectedly' );
 
-    // Generic themes: the standard wp_footer callback still works once.
+    $css = file_get_contents( dirname( __DIR__ ) . '/aikey-seo-geo/assets/css/footer-credit.css' );
+    check( str_contains( $css, 'background: transparent' ), 'Standalone footer background is still present' );
+    check( ! str_contains( $css, 'position: fixed' ) && ! str_contains( $css, 'position: absolute' ), 'Credit must stay in document flow' );
+
+    // Other themes: the fallback only inserts into an existing footer node,
+    // never creates a separate visible block after the closing theme footer.
     $reset();
     $plugin::register_footer_credit();
-    ob_start(); do_action( 'wp_footer' ); do_action( 'wp_footer' );
-    $html=ob_get_clean();
-    check( 1 === substr_count( $html, 'class="aikey-seo-geo-footer-credit"' ), 'Generic theme doubled attribution' );
-    check( 1 === substr_count( $html, 'href="https://aikeyboost.com/"' ), 'Generic theme lost attribution' );
+    ob_start();
+    do_action( 'wp_footer' );
+    do_action( 'wp_footer' );
+    $fallback = ob_get_clean();
+    check( 1 === substr_count( $fallback, 'id="aikey-seo-geo-footer-credit-fallback"' ), 'Fallback must be emitted once' );
+    check( str_contains( $fallback, "target.appendChild(block)" ), 'Fallback must insert inside existing footer' );
+    check( str_contains( $fallback, "if (!target) { return; }" ), 'Fallback must not create a standalone module' );
+    check( ! str_contains( $fallback, '<div class="aikey-seo-geo-footer-credit">' ), 'Fallback added a visible outer block' );
 
     // Backend should have no public hooks or output even if invoked manually.
     $reset();
