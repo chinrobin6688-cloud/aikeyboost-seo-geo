@@ -44,7 +44,9 @@ namespace {
     $reset = static function () use ( $plugin ): void {
         $GLOBALS['aikey_test_hooks'] = array();
         $GLOBALS['aikey_test_styles'] = array();
-        ( new \ReflectionProperty( $plugin, 'footer_credit_rendered' ) )->setValue( false );
+        $credit_property = new \ReflectionProperty( $plugin, 'footer_credit_rendered' );
+        $credit_property->setAccessible( true ); // Required for private properties on PHP 8.0.
+        $credit_property->setValue( false );
     };
 
     // Even previously saved false/opt-out must not suppress attribution.
