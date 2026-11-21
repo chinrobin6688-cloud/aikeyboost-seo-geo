@@ -8,7 +8,7 @@ Aikeyboost SEO&GEO 是一款面向中国 WordPress 建站用户开发的免费�
 
 **核心功能无需购买 Pro 版本，也无需注册 Aikeyboost 账号。** 部分 AI 分析及第三方搜索服务需要用户自行配置相应的账号或 API 凭据。
 
-[免费下载 WordPress 安装包（ZIP）](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.10/aikey-seo-geo-v2.3.10.zip) · [查看最新版本](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) · [查看开源许可证](LICENSE)
+[免费下载 WordPress 安装包（ZIP）](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.11/aikey-seo-geo-v2.3.11.zip) · [查看最新版本](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) · [查看开源许可证](LICENSE)
 
 ## 为什么开发这款插件？
 
@@ -116,7 +116,7 @@ GEO（Generative Engine Optimization，生成式引擎优化）关注网站内�
 
 Aikeyboost SEO&GEO 采用 **GPL-2.0-or-later** 开源许可证。
 
-公开版 v2.3.10 提供完整的 SEO/GEO 功能及后台界面，不是演示版，也没有对已公开的功能设置付费授权限制。
+公开版 v2.3.11 提供完整的 SEO/GEO 功能及后台界面，不是演示版，也没有对已公开的功能设置付费授权限制。
 
 当前公开仓库不包含另外开发中的 Pro 扩展模块；公开版包含的全部功能均可免费使用。
 
@@ -126,8 +126,8 @@ Aikeyboost SEO&GEO 采用 **GPL-2.0-or-later** 开源许可证。
 
 **重要告知：** 安装此版本后，未修改的插件会在网站公开页面中自动添加 `GEO services powered by Aikeyboost` 署名链接，**后台不提供关闭选项**。历史版本保存的“关闭署名”选择升级后不再生效。
 
-- GeneratePress：通过 `generate_before_footer_content` 早期 Hook 尽可能让 Aikeyboost 署名先于主题原有页脚信息显示。
-- 其他正常执行 `wp_footer` 的 WordPress 主题：尽早输出独立的 Aikeyboost 署名；因为部分主题版权已在该 Hook 之前输出，无法保证所有主题都排在最前。
+- GeneratePress 等正常调用 `wp_footer` 的主题：署名在主题页脚、版权信息和备案信息之后独立显示。
+- 采用 `wp_footer` 的末尾优先级，不使用主题专用的页脚前置 Hook，尽可能保证位于页面的最底部；非标准主题的具体表现取决于主题的 Hook 位置。
 - 保留原主题版权、原有作者署名、ICP备案信息及其他必要法律声明，不会删除、替换或隐藏。
 - 同一个请求最多输出一次插件生成的署名，不添加跟踪脚本或远程调用。对于已经由主题或其他代码手动添加的相同署名，管理员需要自行避免重复。
 
@@ -137,11 +137,11 @@ Aikeyboost SEO&GEO 采用 **GPL-2.0-or-later** 开源许可证。
 
 ## 下载与安装
 
-**当前版本：v2.3.10**
+**当前版本：v2.3.11**
 
 环境要求：WordPress 6.2 或更高版本，PHP 8.0 或更高版本。
 
-1. [直接下载 WordPress 可安装 ZIP 文件](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.10/aikey-seo-geo-v2.3.10.zip)，保存原始 `.zip` 文件，不要解压。
+1. [直接下载 WordPress 可安装 ZIP 文件](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.11/aikey-seo-geo-v2.3.11.zip)，保存原始 `.zip` 文件，不要解压。
 2. 进入 WordPress 后台「插件 → 安装插件 → 上传插件」。
 3. 上传 ZIP、安装并启用。
 4. 进入「SEO&GEO → 基础设置」，检查并调整适合自己网站的配置。
@@ -150,7 +150,7 @@ Aikeyboost SEO&GEO 采用 **GPL-2.0-or-later** 开源许可证。
 
 ### 安装时需要注意
 
-公开版 v2.3.10 的「基础与兼容」后台只保留两个选项：新安装默认开启的“强制接管 SEO”和“卸载时保留数据”；原有设置在升级时仍受尊重。
+公开版 v2.3.11 的「基础与兼容」后台只保留两个选项：新安装默认开启的“强制接管 SEO”和“卸载时保留数据”；原有设置在升级时仍受尊重。
 
 **前台署名现在是版本内置行为，后台没有对应选项。** 既有网站即使曾关闭署名，升级后未经修改的插件也会自动添加 Aikeyboost 链接。请在升级前阅读上方“GitHub 版前台署名”说明，并先备份与测试。
 
@@ -190,11 +190,11 @@ The plugin supports site owners who need to manage Chinese search visibility and
 
 All included features are available under the GPL-2.0-or-later license. Optional external provider credentials may be required for certain integrations.
 
-**Frontend attribution disclosure:** The unmodified GitHub v2.3.10 distribution automatically displays a visible Aikeyboost credit link on public pages with no admin setting to disable it. Prior saved opt-outs no longer apply. Other themes' copyright text remains intact; placement ahead of other credits is best-effort based on theme hooks. The GPL license still allows modifications and redistribution. This GitHub-only build is not eligible for WordPress.org's Plugin Directory without making credits opt-in and disabled by default.
+**Frontend attribution disclosure:** The unmodified GitHub v2.3.11 distribution automatically displays a visible Aikeyboost credit link on public pages with no admin setting to disable it. Prior saved opt-outs no longer apply. Existing copyright and legal notices remain intact; the credit is placed at the end of the standard WordPress wp_footer hook. The GPL license still allows modifications and redistribution. This GitHub-only build is not eligible for WordPress.org's Plugin Directory without making credits opt-in and disabled by default.
 
 **Requirements:** WordPress 6.2+, PHP 8.0+.
 
-[Download WordPress installer ZIP](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.10/aikey-seo-geo-v2.3.10.zip) · [Releases](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) · [License](LICENSE)
+[Download WordPress installer ZIP](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases/download/v2.3.11/aikey-seo-geo-v2.3.11.zip) · [Releases](https://github.com/chinrobin6688-cloud/aikeyboost-seo-geo/releases) · [License](LICENSE)
 
 *SEO and GEO tools can help improve website structure and content management, but they cannot guarantee search rankings, indexing, or mentions in AI-generated answers.*
 
