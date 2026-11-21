@@ -10,4 +10,7 @@ __MACOSX/
 .vscode/
 node_modules/
 vendor/
+# Ignore incidental archives but version-controlled WordPress release ZIPs stay in dist/.
 *.zip
+!dist/
+!dist/*.zip
