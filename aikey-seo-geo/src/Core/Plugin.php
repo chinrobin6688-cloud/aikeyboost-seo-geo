@@ -54,77 +54,54 @@ final class Plugin {
     }
 
     /**
-     * GeneratePress executes generate_credits inside the existing footer's
-     * .inside-site-info copyright area. Appending at the last priority keeps
-     * other credits, ICP notices, and theme markup intact.
-     *
-     * Themes without that hook use a tiny DOM fallback which places the credit
-     * inside an existing footer; it never creates a standalone page section.
+     * GeneratePress fires generate_credits inside the existing copyright bar.
+     * Append inline text to inherit the theme's font, color, and line height.
      */
     public static function register_footer_credit(): void {
         if ( is_admin() ) { return; }
-        add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_footer_credit_style' ) );
+
         add_action( 'generate_credits', array( self::class, 'render_footer_credit' ), PHP_INT_MAX );
+
+        // Non-GeneratePress themes: append only to a recognized copyright line.
         add_action( 'wp_footer', array( self::class, 'render_footer_credit_fallback' ), PHP_INT_MAX );
     }
 
-    public static function enqueue_footer_credit_style(): void {
-        wp_enqueue_style(
-            'aikey-seo-geo-footer-credit',
-            AIKEY_SEO_GEO_URL . 'assets/css/footer-credit.css',
-            array(),
-            AIKEY_SEO_GEO_VERSION . '-footer-inline'
-        );
-    }
-
-    /**
-     * Render inside GeneratePress's existing copyright/filing-information bar.
-     */
     public static function render_footer_credit(): void {
         if ( self::$footer_credit_rendered || is_admin() ) { return; }
+
         self::$footer_credit_rendered = true;
-        echo '<div class="aikey-seo-geo-footer-credit">GEO services powered by '
+        echo ' <span class="aikey-seo-geo-inline-credit">&middot; GEO services powered by '
             . '<a href="' . esc_url( 'https://aikeyboost.com/' ) . '" rel="nofollow">'
-            . esc_html( 'Aikeyboost' ) . '</a></div>';
+            . esc_html( 'Aikeyboost' ) . '</a></span>';
     }
 
     /**
-     * Non-GeneratePress fallback: never print a visible footer block outside
-     * the actual theme footer. Attach into an existing copyright/footer node,
-     * and do nothing if the page supplies no such node.
+     * No separate block and no style overrides. On other themes, inject the
+     * same inline span only when an existing copyright line can be identified.
      */
     public static function render_footer_credit_fallback(): void {
         if ( self::$footer_credit_rendered || is_admin() ) { return; }
+
         self::$footer_credit_rendered = true;
         ?>
-        <script id="aikey-seo-geo-footer-credit-fallback">
+        <script id="aikey-seo-geo-credit-fallback">
         (function () {
-            if (document.querySelector('.aikey-seo-geo-footer-credit')) { return; }
-            var selectors = [
-                '.site-info .inside-site-info',
-                'footer .footer-bottom',
-                'footer .footer-copyright',
-                'footer .copyright',
-                '.site-footer .site-info',
-                'footer.site-footer',
-                'footer[role="contentinfo"]',
-                'footer'
-            ];
-            var target = null;
-            for (var i = 0; i < selectors.length; i++) {
-                var matches = document.querySelectorAll(selectors[i]);
-                if (matches.length) { target = matches[matches.length - 1]; break; }
-            }
+            if (document.querySelector('.aikey-seo-geo-inline-credit')) { return; }
+            var target = document.querySelector(
+                '.site-info .copyright-bar, .site-info .copyright, ' +
+                '.footer-copyright .copyright, footer .copyright-bar, ' +
+                'footer .footer-copyright, footer .copyright'
+            );
             if (!target) { return; }
-            var block = document.createElement('div');
-            block.className = 'aikey-seo-geo-footer-credit';
-            block.appendChild(document.createTextNode('GEO services powered by '));
+            var span = document.createElement('span');
+            span.className = 'aikey-seo-geo-inline-credit';
+            span.appendChild(document.createTextNode(' \u00b7 GEO services powered by '));
             var link = document.createElement('a');
             link.href = 'https://aikeyboost.com/';
             link.rel = 'nofollow';
             link.textContent = 'Aikeyboost';
-            block.appendChild(link);
-            target.appendChild(block);
+            span.appendChild(link);
+            target.appendChild(span);
         }());
         </script>
         <?php
