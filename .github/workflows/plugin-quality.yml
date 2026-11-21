@@ -40,7 +40,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Verify published package checksums
         run: sha256sum --check SHA256SUMS.txt
-      - name: Check latest ZIP integrity and WordPress plugin entry point
+      - name: Check install ZIP integrity, layout and embedded version
+        shell: bash
         run: |
-          unzip -t dist/aikey-seo-geo-v2.3.10.zip
-          unzip -Z1 dist/aikey-seo-geo-v2.3.10.zip | grep -qx 'aikey-seo-geo/aikey-seo-geo.php'
+          set -euo pipefail
+          shopt -s nullglob
+          archives=(dist/*.zip)
+          test "${#archives[@]}" -eq 1
+          archive="${archives[0]}"
+          unzip -t "$archive"
+          unzip -Z1 "$archive" | grep -qx 'aikey-seo-geo/aikey-seo-geo.php'
+          embedded_version=$(unzip -p "$archive" aikey-seo-geo/aikey-seo-geo.php | sed -nE 's/^[[:space:]]*\\*[[:space:]]*Version:[[:space:]]*([0-9.]+).*/\\1/p' | head -n 1)
+          test "$(basename "$archive")" = "aikey-seo-geo-v${embedded_version}.zip"
