@@ -73,7 +73,7 @@ final class Plugin {
             'aikey-seo-geo-footer-credit',
             AIKEY_SEO_GEO_URL . 'assets/css/footer-credit.css',
             array(),
-            AIKEY_SEO_GEO_VERSION
+            AIKEY_SEO_GEO_VERSION . '-footer-inline'
         );
     }
 
