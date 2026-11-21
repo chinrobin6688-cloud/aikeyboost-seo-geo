@@ -52,7 +52,7 @@ No. It links genuine existing translations and manages SEO language metadata; it
 No. Basic SEO, schema and sitemap functions run without an external Aikeyboost account. Some optional integrations need provider credentials or approved site verification.
 
 = Will an Aikeyboost link appear on my visitors' pages? =
-Yes. This GitHub distribution automatically adds a visible, nofollow Aikeyboost attribution link on public pages, without a settings checkbox. GeneratePress integrates the credit inside the existing copyright/filing-information module, after other credits; other themes use an existing-footer-only fallback. Theme credits and required legal notices are not changed or removed. Only one attribution is emitted per request by the plugin. Previously saved opt-outs no longer affect this output. The source remains GPL-licensed and can be modified and redistributed according to the license.
+Yes. This GitHub distribution automatically adds a visible, nofollow Aikeyboost attribution link on public pages, without a settings checkbox. GeneratePress appends the credit inline to the existing copyright and registration line with inherited typography; other themes use a copyright-line fallback only when a suitable line exists. Theme credits and required legal notices are not changed or removed. Only one attribution is emitted per request by the plugin. Previously saved opt-outs no longer affect this output. The source remains GPL-licensed and can be modified and redistributed according to the license.
 
 = Can this plugin coexist with another SEO plugin? =
 On new installations, Aikeyboost SEO takeover is enabled by default even if another SEO plugin is detected. This may duplicate SEO tags or sitemap output. Disable takeover or the other SEO plugin to avoid conflicts. Existing saved takeover choices are respected.
@@ -84,13 +84,13 @@ Screenshots are planned for the WordPress.org assets repository after obtaining 
 
 == GitHub public distribution note ==
 
-This GitHub distribution includes a mandatory-on-in-the-distributed-code, visible Aikeyboost attribution link on public pages. There is no checkbox to disable it. Existing saved credit opt-outs are intentionally ignored after upgrading. The link uses GeneratePress's generate_credits hook inside the existing site-info bar, followed by a footer-container fallback for other themes. The plugin never deletes or rewrites another developer's copyright or required legal notices. Some custom themes may not invoke these WordPress hooks, so display cannot be guaranteed in every theme. This is open-source code under GPL-2.0-or-later, which permits modification and redistribution: the link cannot be legally guaranteed to remain on modified copies.
+This GitHub distribution includes a mandatory-on-in-the-distributed-code, visible Aikeyboost attribution link on public pages. There is no checkbox to disable it. Existing saved credit opt-outs are intentionally ignored after upgrading. The link uses GeneratePress's generate_credits hook to join the existing copyright line, with no separate block, stylesheet or font override; other themes use an existing copyright-line fallback. The plugin never deletes or rewrites another developer's copyright or required legal notices. Some custom themes may not invoke these WordPress hooks, so display cannot be guaranteed in every theme. This is open-source code under GPL-2.0-or-later, which permits modification and redistribution: the link cannot be legally guaranteed to remain on modified copies.
 
 IMPORTANT: Do not submit this edition unchanged to the WordPress.org Plugin Directory: its policy requires visitor-facing credits to be optional and OFF by default. The default SEO takeover may also conflict with other SEO plugins.
 
 == Changelog ==
 
 = 2.3.11 =
-* Place the credit in the SAME GeneratePress copyright/ICP footer module via generate_credits, after other notices, not as an independent section.
+* Render the attribution as inline text on the SAME GeneratePress copyright/ICP line with the theme's original font, color and spacing; delete obsolete credit CSS.
 * Preserve existing footers and legal notices; prevent duplicate plugin attribution.
 * Retain the complete free SEO/GEO functionality and database schema 17. No Pro code or data migration.
