@@ -52,3 +52,5 @@ jobs:
           unzip -Z1 "$archive" | grep -qx 'aikey-seo-geo/aikey-seo-geo.php'
           embedded_version=$(unzip -p "$archive" aikey-seo-geo/aikey-seo-geo.php | awk '/Version:/ { print $3; exit }')
           test "$(basename "$archive")" = "aikey-seo-geo-v${embedded_version}.zip"
+          cmp aikey-seo-geo/src/Core/Plugin.php <(unzip -p "$archive" aikey-seo-geo/src/Core/Plugin.php)
+          cmp aikey-seo-geo/assets/css/footer-credit.css <(unzip -p "$archive" aikey-seo-geo/assets/css/footer-credit.css)
