@@ -54,15 +54,16 @@ final class Plugin {
     }
 
     /**
-     * The GitHub edition adds its own attribution before other footer content
-     * when a dedicated theme hook exists. Never rewrite theme credits.
-     * wp_footer is a generic fallback; the shared guard avoids duplicates.
+     * Render the independent credit after theme footer markup and legal notices.
+     * WordPress themes call wp_footer immediately before the closing body tag;
+     * using its latest priority avoids inserting anything into footer content.
+     * We deliberately do not use GeneratePress footer hooks because they may
+     * run before custom footer widgets, copyright text or ICP information.
      */
     public static function register_footer_credit(): void {
         if ( is_admin() ) { return; }
         add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_footer_credit_style' ) );
-        add_action( 'generate_before_footer_content', array( self::class, 'render_footer_credit' ), 1 );
-        add_action( 'wp_footer', array( self::class, 'render_footer_credit' ), 1 );
+        add_action( 'wp_footer', array( self::class, 'render_footer_credit' ), PHP_INT_MAX );
     }
 
     public static function enqueue_footer_credit_style(): void {
