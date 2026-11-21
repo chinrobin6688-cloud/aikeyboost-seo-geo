@@ -122,19 +122,6 @@ Aikeyboost SEO&GEO 采用 **GPL-2.0-or-later** 开源许可证。
 
 项目源码公开，用户可以依据许可证查看、修改和再分发。
 
-## GitHub 发行版安装须知
-
-**重要告知：** 安装此版本后，未修改的插件会在网站公开页面中自动添加 `GEO services powered by Aikeyboost` 署名链接，**后台不提供关闭选项**。历史版本保存的“关闭署名”选择升级后不再生效。
-
-- GeneratePress 主题：通过 `generate_credits` 将署名直接追加到原有版权、备案信息**同一行**，与现有文字采用同一字体大小、颜色和行高；屏幕较窄时允许正常换行。
-- 其他主题：仅在识别出已有的版权文字容器时追加同一行的行内署名；找不到合适位置则不单独生成新模块。
-- 保留原主题版权、原有作者署名、ICP备案信息及其他必要法律声明，不会删除、替换或隐藏。
-- 同一个请求最多输出一次插件生成的署名，不添加跟踪脚本或远程调用。对于已经由主题或其他代码手动添加的相同署名，管理员需要自行避免重复。
-
-**开源权利：** 项目采用 GPL-2.0-or-later 许可证，用户可以依据许可证修改与重新分发源码；上面的默认署名仅描述 GitHub 原始发行版的实际行为。
-
-**发布渠道：** 本版本只在 GitHub 发行。WordPress.org 要求前台开发者署名链接必须经过用户主动同意、默认关闭，因此当前发行版不符合 WordPress.org 官方插件目录上架规范。
-
 ## 下载与安装
 
 **当前版本：v2.3.11**
@@ -151,8 +138,6 @@ Aikeyboost SEO&GEO 采用 **GPL-2.0-or-later** 开源许可证。
 ### 安装时需要注意
 
 公开版 v2.3.11 的「基础与兼容」后台只保留两个选项：新安装默认开启的“强制接管 SEO”和“卸载时保留数据”；原有设置在升级时仍受尊重。
-
-**前台署名现在是版本内置行为，后台没有对应选项。** 既有网站即使曾关闭署名，升级后未经修改的插件也会自动添加 Aikeyboost 链接。请在升级前阅读上方“GitHub 版前台署名”说明，并先备份与测试。
 
 如果网站已经安装其他 SEO 插件，建议检查 Title、Meta、Canonical、Sitemap 等是否重复输出，避免 SEO 配置冲突。
 
@@ -189,8 +174,6 @@ It combines Baidu SEO and Chinese search engine configuration with technical SEO
 The plugin supports site owners who need to manage Chinese search visibility and international SEO in one WordPress installation.
 
 All included features are available under the GPL-2.0-or-later license. Optional external provider credentials may be required for certain integrations.
-
-**Frontend attribution disclosure:** The unmodified GitHub v2.3.11 distribution automatically displays a visible Aikeyboost credit link on public pages with no admin setting to disable it. Prior saved opt-outs no longer apply. Existing copyright and legal notices remain intact. GeneratePress appends the credit inline on the same copyright/filing-information line without extra CSS; other themes use a safe copyright-line fallback only when an existing line is found. The GPL license still allows modifications and redistribution. This GitHub-only build is not eligible for WordPress.org's Plugin Directory without making credits opt-in and disabled by default.
 
 **Requirements:** WordPress 6.2+, PHP 8.0+.
 
