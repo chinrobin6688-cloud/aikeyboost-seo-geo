@@ -1,0 +1,31 @@
+name: Publish v2.3.10 installer ZIP
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-v2-3-10-zip.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release-installer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+
+      - name: Validate official ZIP and checksum
+        run: |
+          sha256sum --check SHA256SUMS.txt
+          unzip -t dist/aikey-seo-geo-v2.3.10.zip
+          unzip -Z1 dist/aikey-seo-geo-v2.3.10.zip | grep -qx 'aikey-seo-geo/aikey-seo-geo.php'
+
+      - name: Attach installer ZIP to the existing GitHub v2.3.10 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view v2.3.10 --json tagName,isDraft,isPrerelease
+          gh release upload v2.3.10 dist/aikey-seo-geo-v2.3.10.zip --clobber
