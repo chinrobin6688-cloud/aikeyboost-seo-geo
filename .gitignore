@@ -1,0 +1,13 @@
+# Local-only files; releases contain the installable plugin directory.
+.DS_Store
+__MACOSX/
+*.log
+*.swp
+*.bak
+.env
+.env.*
+.idea/
+.vscode/
+node_modules/
+vendor/
+*.zip

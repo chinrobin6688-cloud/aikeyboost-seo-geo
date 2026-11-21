@@ -1,0 +1,26 @@
+/** Stable v2.3.2 advanced screens: visual adaptation only. */
+.aikey-wrap {box-sizing:border-box; width:min(1460px,calc(100% - 18px));}
+.aikey-wrap *, .aikey-wrap *::before, .aikey-wrap *::after {box-sizing:border-box;}
+.aikey-wrap .aikey-grid, .aikey-wrap .aikey-grid-4,
+.aikey-wrap .aikey-workbench-columns, .aikey-wrap .aikey-workbench-issues {min-width:0;}
+.aikey-wrap .aikey-panel, .aikey-wrap .aikey-card,
+.aikey-wrap .aikey-workbench-head,.aikey-wrap .aikey-workbench-editor,
+.aikey-wrap .aikey-workbench-columns>* {min-width:0;max-width:100%;}
+.aikey-wrap .aikey-workbench-columns {grid-template-columns:repeat(2,minmax(0,1fr));}
+.aikey-wrap .aikey-workbench-editor textarea,
+.aikey-wrap .aikey-workbench-editor input[type="text"],
+.aikey-wrap .aikey-workbench-editor select {max-width:100%;}
+.aikey-wrap .aikey-panel table.widefat {max-width:100%;}
+/* The language editor predates the modern panel component. */
+.aikey-wrap.aikey-language-stable > h2 {margin:25px 0 12px;font-size:18px;color:#2d3f63;}
+.aikey-wrap.aikey-language-stable > table.widefat,
+.aikey-wrap.aikey-language-stable > form {border:1px solid #dbe5f3;border-radius:13px;background:#fff;box-shadow:0 8px 26px rgba(35,56,102,.048);}
+.aikey-wrap.aikey-language-stable > form {padding:20px 22px;margin:12px 0 20px;}
+.aikey-wrap.aikey-language-stable > table.widefat {overflow:hidden;}
+.aikey-wrap.aikey-language-stable > form input[type="text"],
+.aikey-wrap.aikey-language-stable > form select {max-width:100%;}
+.aikey-wrap .aikey-navigation-shell {width:100%;}
+.aikey-wrap .aikey-workbench-issue-list {min-width:0;}
+@media(max-width:900px){.aikey-wrap .aikey-workbench-columns {grid-template-columns:minmax(0,1fr)}}
+@media(max-width:700px){.aikey-wrap {width:calc(100% - 12px)} .aikey-wrap.aikey-language-stable > form{padding:14px 12px}}
+@media(prefers-reduced-motion:reduce){.aikey-wrap .aikey-primary-links a{transition:none}}

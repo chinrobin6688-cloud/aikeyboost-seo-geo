@@ -1,0 +1,13 @@
+/**
+ * SEO&GEO native submenu, stable at first paint on every WordPress admin page.
+ * WordPress keeps all registered admin routes for direct links and capability
+ * checks; presentation no longer waits for a footer DOMContentLoaded script.
+ * :has() only styles this plugin's WP sidebar subtree.
+ */
+@supports selector(li:has(> a[href])) {
+  #toplevel_page_aikey-seo-geo .wp-submenu li:has(> a[href*="page=aikey-seo-geo-"]):not(:has(> a[href*="page=aikey-seo-geo-optimizer"])):not(:has(> a[href*="page=aikey-seo-geo-articles"])):not(:has(> a[href*="page=aikey-seo-geo-languages"])):not(:has(> a[href*="page=aikey-seo-geo-submit"])):not(:has(> a[href*="page=aikey-seo-geo-redirects"])):not(:has(> a[href*="page=aikey-seo-geo-settings"])) {
+      display:none !important;
+  }
+}
+/* WordPress renders the top-level page link separately. Never hide that link.
+ * Existing direct admin.php?page=... links remain registered and reachable. */

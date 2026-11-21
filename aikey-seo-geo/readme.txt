@@ -1,0 +1,117 @@
+=== Aikeyboost SEO&GEO ===
+Contributors: aikeyboost
+Tags: seo, sitemap, schema, multilingual, ai-search
+Requires at least: 6.2
+Tested up to: 7.1
+Requires PHP: 8.0
+Stable tag: 2.3.7
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+SEO tools for international and Chinese WordPress websites: metadata, sitemaps, structured data, multilingual URL links and crawl diagnostics.
+
+== Description ==
+
+Aikeyboost SEO & GEO brings established WordPress SEO tools and optional AI-search-readiness workflows into one plugin. It is designed for site owners managing Chinese search traffic alongside international sites.
+
+Core features:
+* Edit SEO titles, descriptions, canonical URLs, robots indexing directives and social sharing metadata.
+* Build XML sitemaps with indexability checks for public posts, pages and supported custom post types.
+* Publish Organization, WebSite, Article, WebPage, Product, Breadcrumb and eligible visible FAQ structured data.
+* Register languages and explicitly link actual translated WordPress page IDs. Hreflang output remains disabled until you enable the appropriate migration settings.
+* Configure language-specific Organization details without rewriting the canonical organization identifier.
+* Manage redirects and view aggregated 404 activity.
+* View basic search referral and known crawler counters stored in your WordPress database.
+* Review SEO/GEO content metadata and display manually supplied, public-facing facts, FAQs and sources.
+* Provide /llms.txt and bounded /llms-full.txt text endpoints. These do not guarantee inclusion in any AI answer.
+* Configure optional search-engine integrations, including IndexNow and Baidu URL submission when applicable. New installations do not automatically submit URLs until the administrator enables submission.
+* Optionally connect your own DeepSeek API key to request AI analysis.
+
+There are no paid license restrictions on the functionality distributed with this plugin. Optional independently distributed premium extensions or substantial hosted services may be offered separately by the developer. They are not required for the included features.
+
+== Installation ==
+
+1. Install the plugin through WordPress Plugins, or upload the plugin ZIP through Plugins > Add New.
+2. Activate Aikeyboost SEO & GEO and open its settings.
+3. Review the sitemap and SEO metadata settings for your WordPress installation.
+4. For multilingual sites, register only real languages and link existing translated pages before enabling hreflang.
+5. Connect external search or AI services only if you intend to use them. Do not activate overlapping SEO metadata modules in multiple SEO plugins.
+6. On new installations, forced SEO takeover and visitor-facing developer attribution are disabled by default. Existing saved choices are preserved when updating.
+
+== Frequently Asked Questions ==
+
+= Does this plugin automatically rank my site in AI search? =
+No. No plugin can guarantee a citation, ranking or mention in an AI-generated answer. The plugin helps manage publicly available content and technical SEO metadata.
+
+= Does it translate page content? =
+No. It links genuine existing translations and manages SEO language metadata; it does not automatically translate pages.
+
+= Are external services required? =
+No. Basic SEO, schema and sitemap functions run without an external Aikeyboost account. Some optional integrations need provider credentials or approved site verification.
+
+= Will an Aikeyboost link appear on my visitors' pages? =
+No. Visitor-facing attribution is off by default and can be enabled only by the site administrator in Basic Settings. It modifies only matching existing footer credits in supported themes. Existing saved choices are preserved on update.
+
+= Can this plugin coexist with another SEO plugin? =
+New installations leave forced takeover disabled by default. Aikeyboost detects several other SEO plugins and defers overlapping output where appropriate. Avoid enabling two plugins that both output metadata or sitemap routes. Previously saved takeover choices are respected.
+
+== External Services ==
+
+The plugin includes optional connections to third-party services. Please review each provider's terms and privacy policy before enabling them.
+
+* DeepSeek: When an administrator configures an API key and requests AI analysis, selected article text and analysis context are transmitted to the configured API endpoint.
+* IndexNow and Baidu: When URL submission is configured and active, published URLs, site verification values or submission keys may be transmitted to the respective search platform. Review automatic submission settings before publishing.
+* Google Search Console and Bing Webmaster APIs: Administrator-authorized integrations retrieve webmaster analytics data from the provider.
+* Baidu Analytics: Its remote tracking script is available only if explicitly enabled/configured. Website visitors may then send tracking information directly to Baidu.
+* Public domain verification or on-demand diagnostics may make HTTP requests to relevant site URLs at an administrator's request.
+
+The plugin also stores local WordPress contact form submissions, aggregated referral/crawler counts, SEO metadata and configured provider credentials. Site administrators are responsible for explaining visitor data processing under applicable privacy rules, and for reviewing retention and deletion requirements.
+
+== Privacy ==
+
+Referral/crawler statistics are stored locally as aggregate source, path, hit and timestamp information in plugin tables. Contact forms retain the details users choose to submit in the WordPress database. Optional external connections may transfer site URLs, API credentials or content to their respective providers as described above. The plugin does not guarantee that an external provider will treat this information as confidential. Review the privacy notices of services that you enable.
+
+== Screenshots ==
+
+1. SEO/GEO optimization overview.
+2. Search engine and sitemap controls.
+3. Multilingual page translation groups.
+4. Structured data and public content settings.
+
+Screenshots are planned for the WordPress.org assets repository after obtaining approval.
+
+== Changelog ==
+
+= 2.3.7 =
+* Publish a public-source edition based on stable v2.3.6, without private repository history or Pro modules.
+* Default forced SEO takeover and visitor-facing Aikeyboost credits to OFF for fresh public installations; existing user choices are preserved.
+* Keep data retention ON by default. No database schema or public-route changes.
+* Include the GPL-2.0-or-later license text and public release documentation.
+
+= 2.3.6 =
+* Default the three Basic & Compatibility checkboxes to enabled on new installations: SEO takeover, retain data on uninstall, and optional frontend Aikeyboost attribution.
+* Preserve previously saved on/off settings on upgrade and honor explicit checkbox changes thereafter.
+* Keep database schema version 17 and all existing SEO/GEO functionality unchanged. Those defaults were specific to the private build; the public v2.3.7 edition instead requires explicit opt-in for takeover and attribution.
+
+= 2.3.5 =
+* Preserve v2.3.2 stable functionality with the integrated Prism administration design.
+* Correct notice and page-subtitle CSS ownership so warnings, errors, success and information messages remain readable on light cards and dark headers.
+* Remove the previous ineffective helper-class style overrides. No database, shortcode, frontend, provider or feature change.
+
+
+= 2.3.3 =
+* Update the plugin administration visual presentation with the Aikeyboost Prism styles: consistent panels, richer depth, responsive navigation and readable forms.
+* Keep the complete v2.3.2 Free/stable feature set and all existing writable workflows unchanged. No Pro dependency, licensing gate, database migration or frontend asset change.
+* Preserve all SEO/GEO keys, menu URLs, public routes and compatibility with WordPress 6.2 and PHP 8.0.
+
+
+= 2.3.2 =
+* Make optional visitor-facing developer attribution disabled by default, requiring explicit administrator consent.
+* Prepare the public WordPress.org description and external-service/privacy disclosures.
+* Preserve all existing SEO/GEO functionality and multilingual relationships.
+
+= 2.3.1 =
+* Add localized Organization/WebSite records, registered locale route recognition and a bounded /llms-full.txt endpoint.
+
+= 2.3.0 =
+* Introduce database-backed multilingual translation groups and opt-in ID-based hreflang.

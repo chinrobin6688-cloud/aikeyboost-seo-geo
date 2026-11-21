@@ -1,0 +1,637 @@
+/**
+ * Aikeyboost SEO&GEO admin visual system.
+ * Presentation only: no frontend rules, external assets or feature gates.
+ * Loaded after legacy admin.css; scoped to .aikey-wrap.
+ */
+.aikey-wrap{
+  --aikey-ink:#17263e;
+  --aikey-quiet:#61718a;
+  --aikey-line:#e1e8f1;
+  --aikey-accent:#3157d9;
+  --aikey-accent-soft:#edf2ff;
+  --aikey-surface:#fff;
+  --aikey-soft:#f8faff;
+  --aikey-shadow:0 4px 20px rgba(21,39,76,.035);
+  max-width:1480px;
+  margin:18px 22px 42px 0;
+  color:var(--aikey-ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif;
+  font-size:13.5px;
+  line-height:1.6;
+}
+.aikey-wrap .description{color:var(--aikey-quiet);line-height:1.65;font-size:12.5px}
+.aikey-wrap p{line-height:1.65}
+.aikey-wrap .aikey-page-head{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  box-sizing:border-box;
+  margin:0 0 14px;
+  padding:24px 29px 25px;
+  border:1px solid #233b68;
+  border-radius:16px;
+  background:radial-gradient(circle at 92% 5%,rgba(96,153,245,.24),transparent 34%),
+             linear-gradient(115deg,#15213b 0%,#203a69 100%);
+  box-shadow:0 8px 30px rgba(23,40,75,.08);
+}
+.aikey-wrap .aikey-page-head:not(.aikey-article-page-head)::before{
+  content:"AIKEYBOOST  /  SEO & GEO";
+  display:block;
+  margin:0 0 8px;
+  color:#b3c9fa;
+  letter-spacing:.13em;
+  font-weight:750;
+  font-size:10px;
+  line-height:1.45;
+}
+.aikey-wrap .aikey-page-head h1{
+  margin:0 0 8px;
+  color:#fff;
+  font-size:25px;
+  font-weight:700;
+  letter-spacing:-.025em;
+  line-height:1.3;
+}
+.aikey-wrap .aikey-page-head > p,
+.aikey-wrap .aikey-article-page-head > div > p{
+  color:#d7e0ef;
+  font-size:13.5px;
+  line-height:1.7;
+  max-width:950px;
+  margin:0;
+}
+.aikey-wrap .aikey-page-head .aikey-eyebrow{
+  display:block;
+  color:#b3c9fa!important;
+  margin:0 0 8px;
+  letter-spacing:.13em;
+  font-size:10px!important;
+}
+.aikey-wrap .aikey-page-head .button:not(.button-primary){
+  color:#f6f8ff;
+  border:1px solid rgba(207,223,250,.55);
+  background:rgba(255,255,255,.11);
+}
+.aikey-wrap .aikey-page-head .button:not(.button-primary):hover{
+  color:#fff;
+  border-color:#e4edff;
+  background:rgba(255,255,255,.18);
+}
+.aikey-wrap .aikey-page-head .button-primary{
+  background:#fff;
+  border-color:#fff;
+  color:#1a3a7b;
+}
+.aikey-wrap .aikey-page-head .button-primary:hover{
+  background:#eaf2ff;
+  border-color:#eaf2ff;
+  color:#142e64;
+}
+
+/* Six task groups + one contextual tier. Stable across Free and Pro. */
+.aikey-wrap .aikey-navigation-shell{
+  background:#fff;
+  border:1px solid var(--aikey-line);
+  border-radius:13px;
+  margin:0 0 19px;
+  padding:10px 14px 8px;
+  box-shadow:var(--aikey-shadow);
+  min-width:0;
+}
+.aikey-wrap .aikey-navigation-shell .aikey-primary-nav{
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:center;
+  gap:8px;
+  padding:0;
+  margin:0;
+  border:0;
+  background:transparent;
+  border-radius:0;
+  min-width:0;
+}
+.aikey-wrap .aikey-nav-caption,
+.aikey-wrap .aikey-secondary-label{
+  flex:0 0 auto;
+  font-weight:650;
+  font-size:11.5px;
+  color:#7988a0;
+  letter-spacing:.03em;
+  padding:0 10px 0 2px;
+}
+.aikey-wrap .aikey-primary-links{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  min-width:0;
+  flex:1;
+}
+.aikey-wrap .aikey-primary-links a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+  min-height:38px;
+  padding:8px 15px;
+  border-radius:8px;
+  color:#52627b;
+  font-size:13px;
+  font-weight:650;
+  text-decoration:none;
+  transition:color .15s ease,background-color .15s ease;
+}
+.aikey-wrap .aikey-primary-links a:hover,
+.aikey-wrap .aikey-primary-links a:focus-visible{
+  background:#f0f4fc;
+  color:#2445ae;
+}
+.aikey-wrap .aikey-primary-links a.is-active{
+  background:var(--aikey-accent-soft);
+  color:#234bb7;
+}
+.aikey-wrap .aikey-secondary-nav{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:9px;
+  margin:9px 0 0;
+  padding:9px 0 0;
+  border-top:1px solid #edf1f7;
+}
+.aikey-wrap .aikey-secondary-links{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:4px 7px;
+  min-width:0;
+}
+.aikey-wrap .aikey-secondary-links a{
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  padding:6px 12px;
+  border:1px solid transparent;
+  border-radius:7px;
+  color:#596980;
+  font-weight:600;
+  font-size:12.5px;
+  text-decoration:none;
+}
+.aikey-wrap .aikey-secondary-links a:hover{
+  color:#2854cb;
+  background:#f5f7fd;
+}
+.aikey-wrap .aikey-secondary-links a.is-active{
+  background:#f8faff;
+  border-color:#cfdcfb;
+  color:#2854c6;
+}
+
+/* Compact, balanced information hierarchy instead of many competing cards. */
+.aikey-wrap .aikey-grid{gap:14px;margin:0 0 16px}
+.aikey-wrap .aikey-card,
+.aikey-wrap .aikey-panel,
+.aikey-wrap .aikey-workbench-head,
+.aikey-wrap .aikey-workbench-editor{
+  border:1px solid var(--aikey-line);
+  border-radius:13px;
+  background:#fff;
+  box-shadow:var(--aikey-shadow);
+}
+.aikey-wrap .aikey-card{
+  padding:19px 20px 18px;
+  min-width:0;
+  border-top-width:2px;
+}
+.aikey-wrap .aikey-card-ok{border-top-color:#22a879}
+.aikey-wrap .aikey-card-next{border-top-color:#6188e6}
+.aikey-wrap .aikey-card-muted{border-top-color:#cbd5e1}
+.aikey-wrap .aikey-card>span{font-size:12px;color:#69788c;font-weight:600}
+.aikey-wrap .aikey-card>strong{
+  font-size:27px;
+  line-height:1.22;
+  font-weight:730;
+  letter-spacing:-.02em;
+  color:#1d3152;
+  margin:10px 0 6px;
+}
+.aikey-wrap .aikey-card p{font-size:12px;color:#78879a;line-height:1.5}
+.aikey-wrap .aikey-panel{
+  padding:21px 23px;
+  margin:0 0 16px;
+  overflow-x:auto;
+}
+.aikey-wrap .aikey-panel h2{
+  font-size:17px;
+  line-height:1.4;
+  margin:0 0 9px;
+  color:#213653;
+  letter-spacing:-.01em;
+}
+.aikey-wrap .aikey-panel h3{font-size:14px;font-weight:700;color:#29415e}
+.aikey-wrap .aikey-panel-head{
+  gap:14px;
+  align-items:flex-start;
+  margin-bottom:15px;
+}
+.aikey-wrap .aikey-panel-head h2{margin-bottom:4px}
+.aikey-wrap .aikey-panel-head .description,
+.aikey-wrap .aikey-panel-head p{margin:0}
+.aikey-wrap .aikey-warning-panel{border-left:3px solid #d6993f;background:#fffaf1}
+.aikey-wrap .aikey-admin-empty{
+  border:1px dashed #d4deed;
+  background:#f9fbfe;
+  padding:17px 18px;
+  border-radius:9px;
+  color:#6a7990;
+}
+
+/* Forms: consistent hit targets and explicit labels without touching core WP chrome. */
+.aikey-wrap :is(.aikey-panel,.aikey-workbench-editor,.aikey-advanced-tools)
+  :is(input[type="text"],input[type="search"],input[type="url"],
+      input[type="email"],input[type="number"],input[type="password"],select,textarea){
+  box-sizing:border-box;
+  border:1px solid #ccd7e6;
+  border-radius:8px;
+  background:#fff;
+  color:#253751;
+  min-height:39px;
+  padding:7px 11px;
+  box-shadow:none;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.aikey-wrap :is(.aikey-panel,.aikey-workbench-editor,.aikey-advanced-tools)
+  :is(input[type="text"],input[type="search"],input[type="url"],
+      input[type="email"],input[type="number"],input[type="password"],select,textarea):focus{
+  border-color:#587cda;
+  box-shadow:0 0 0 3px rgba(49,87,217,.13);
+  outline:none;
+}
+.aikey-wrap :is(.aikey-panel,.aikey-workbench-editor,.aikey-advanced-tools)
+  :is(input,textarea,select):disabled{background:#f5f7fb;color:#69788b;cursor:not-allowed}
+.aikey-wrap :is(.aikey-panel,.aikey-workbench-editor,.aikey-advanced-tools) :is(input[type="checkbox"],input[type="radio"]){
+  accent-color:var(--aikey-accent);
+}
+.aikey-wrap .aikey-field>label,
+.aikey-wrap .aikey-editor-field>label{color:#31445e;font-weight:650}
+.aikey-wrap .aikey-editor-field .description,
+.aikey-wrap .aikey-field .description{margin-top:6px}
+.aikey-wrap .button{
+  box-sizing:border-box;
+  min-height:36px;
+  padding:5px 13px;
+  border-radius:8px;
+  font-weight:650;
+  box-shadow:none;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease;
+}
+.aikey-wrap .button.button-primary{
+  background:var(--aikey-accent);
+  border-color:var(--aikey-accent);
+  color:#fff;
+}
+.aikey-wrap .button.button-primary:hover,
+.aikey-wrap .button.button-primary:focus{
+  background:#2546b7;
+  border-color:#2546b7;
+  color:#fff;
+}
+.aikey-wrap .button.button-primary:disabled,
+.aikey-wrap .button.button-primary[disabled]{
+  opacity:.62;
+  background:#8a9fc9;
+  border-color:#8a9fc9;
+  color:#fff;
+  box-shadow:none;
+  cursor:not-allowed;
+}
+.aikey-wrap :is(a,button,input,textarea,select,summary):focus-visible{
+  outline:2px solid #3157d9!important;
+  outline-offset:2px;
+}
+.aikey-wrap .aikey-page-search-form{gap:9px}
+.aikey-wrap .aikey-page-search-form input[type="search"]{max-width:720px}
+.aikey-wrap .aikey-workbench-actions{
+  background:#f8faff;
+  border-color:#e5ebf5;
+}
+
+/* Readable data scanning, links and issue severity. */
+.aikey-wrap table.widefat{
+  border:1px solid #e2e9f2;
+  border-radius:10px;
+  border-spacing:0;
+  box-shadow:none;
+  color:#34445b;
+  background:#fff;
+}
+.aikey-wrap table.widefat thead th{
+  background:#f4f7fb;
+  color:#4f6079;
+  font-weight:700;
+  font-size:12px;
+  border-bottom:1px solid #e5ebf4;
+  padding:11px 12px;
+  line-height:1.5;
+}
+.aikey-wrap table.widefat td{
+  padding:11px 12px;
+  line-height:1.55;
+  border-bottom:1px solid #f0f3f8;
+  vertical-align:middle;
+  overflow-wrap:anywhere;
+}
+.aikey-wrap table.widefat tbody tr:last-child td{border-bottom:0}
+.aikey-wrap table.widefat.striped>tbody>:nth-child(odd){background:#fff}
+.aikey-wrap table.widefat.striped>tbody>:nth-child(even){background:#fafbfd}
+.aikey-wrap table.widefat tbody tr:hover td{background:#f5f8fd}
+.aikey-wrap .aikey-issue-cell{color:#586b84}
+.aikey-wrap .aikey-table-sub{font-size:11.5px;color:#8692a5;margin-top:5px}
+.aikey-wrap .aikey-score-badge{min-width:42px;padding:6px 9px}
+.aikey-wrap .aikey-score-badge.good{background:#e5f6ec;color:#176746}
+.aikey-wrap .aikey-score-badge.mid{background:#fff3d9;color:#875512}
+.aikey-wrap .aikey-score-badge.bad{background:#ffebe9;color:#a03434}
+.aikey-wrap .aikey-overview-task{padding:13px 0;align-items:center}
+.aikey-wrap .aikey-overview-task strong{color:#273b57}
+.aikey-wrap .aikey-overview-task .button{flex:0 0 auto}
+.aikey-wrap .aikey-overview-actions{gap:9px}
+.aikey-wrap .aikey-overview-actions .button{
+  padding:9px 13px;
+  min-height:40px;
+  color:#2b4c9a;
+  border-color:#d7e2f6;
+  background:#f9fbff;
+}
+.aikey-wrap .aikey-overview-actions .button:hover{background:#ebf1ff;color:#2447b2}
+
+/* Explicit actions remain visible and keyboard accessible; Pro-only save stays disabled in Free. */
+.aikey-wrap .aikey-workbench-footer{
+  border-color:#d9e2ef;
+  background:rgba(255,255,255,.98);
+  border-radius:10px;
+  padding:13px 16px;
+  box-shadow:0 -4px 18px rgba(20,38,68,.06);
+}
+.aikey-wrap .aikey-workbench-footer [data-aikey-save-status]{font-size:12px}
+.aikey-wrap .aikey-editor-tabs{margin-top:18px}
+.aikey-wrap .aikey-editor-tabs a.is-active{color:#2854c6;background:#edf2ff}
+.aikey-wrap .aikey-workbench-issue-list li{padding:2px 0}
+.aikey-wrap details.aikey-collapsible.aikey-panel{padding:0}
+.aikey-wrap details.aikey-advanced-tools{
+  border-radius:10px;
+  background:#fbfcff;
+  border-color:#e0e7f2;
+}
+.aikey-wrap details.aikey-advanced-tools>summary:hover{background:#f3f6fc}
+.aikey-wrap .aikey-faq-row{border-color:#e0e7f2}
+.aikey-wrap .aikey-panel .notice{margin:8px 0 16px}
+
+/* Standalone Free/Pro tables scroll without changing native table semantics. */
+.aikey-wrap .aikey-table-scroll{
+  width:100%;
+  max-width:100%;
+  overflow-x:auto;
+  scrollbar-width:thin;
+  border:1px solid var(--aikey-line);
+  border-radius:11px;
+  margin:12px 0 18px;
+  background:#fff;
+}
+.aikey-wrap .aikey-table-scroll:focus-visible{
+  outline:2px solid #3157d9;
+  outline-offset:2px;
+}
+.aikey-wrap .aikey-table-scroll table.widefat{
+  border:0;
+  border-radius:0;
+  width:100%;
+  min-width:660px;
+  margin:0;
+}
+
+/* Data tables keep native table semantics; scroll at the containing panel. */
+.aikey-wrap .aikey-panel{scrollbar-width:thin}
+.aikey-wrap .aikey-pagination{margin-top:15px}
+.aikey-wrap .aikey-article-page-head{min-height:0}
+.aikey-wrap .aikey-article-publish-panel{box-shadow:0 10px 27px rgba(15,35,65,.07)}
+
+@media (max-width:1200px){
+  .aikey-wrap .aikey-grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aikey-wrap .aikey-nav-caption{display:none}
+  .aikey-wrap .aikey-primary-links{overflow-x:auto;scrollbar-width:thin;padding-bottom:3px}
+  .aikey-wrap .aikey-primary-links a{padding-inline:12px}
+}
+@media (max-width:850px){
+  .aikey-wrap{margin-right:12px}
+  .aikey-wrap .aikey-navigation-shell{padding:9px 11px}
+  .aikey-wrap .aikey-page-head{padding:20px 21px}
+  .aikey-wrap .aikey-page-head h1{font-size:22px}
+  .aikey-wrap .aikey-secondary-nav{align-items:flex-start}
+  .aikey-wrap .aikey-secondary-label{padding-top:7px}
+  .aikey-wrap .aikey-workbench-issues,
+  .aikey-wrap .aikey-workbench-columns{grid-template-columns:1fr}
+  .aikey-wrap .aikey-panel{padding:18px 18px}
+  .aikey-wrap .aikey-workbench-head{flex-wrap:wrap}
+  .aikey-wrap table.widefat{font-size:12px}
+}
+@media (max-width:600px){
+  .aikey-wrap{margin:12px 9px 32px 0}
+  .aikey-wrap .aikey-page-head{padding:18px 17px;border-radius:12px}
+  .aikey-wrap .aikey-page-head h1{font-size:21px}
+  .aikey-wrap .aikey-page-head > p,
+.aikey-wrap .aikey-article-page-head > div > p{font-size:12.5px}
+  .aikey-wrap .aikey-grid,
+  .aikey-wrap .aikey-grid-4{grid-template-columns:1fr}
+  .aikey-wrap .aikey-card{padding:15px 17px}
+  .aikey-wrap .aikey-panel{padding:15px 14px}
+  .aikey-wrap .aikey-navigation-shell{border-radius:10px;padding:8px}
+  .aikey-wrap .aikey-secondary-nav{display:block}
+  .aikey-wrap .aikey-secondary-label{display:block;padding:0 6px 5px}
+  .aikey-wrap .aikey-secondary-links{gap:4px}
+  .aikey-wrap .aikey-secondary-links a{font-size:12px;padding:6px 9px}
+  .aikey-wrap .aikey-panel-head{flex-wrap:wrap}
+  .aikey-wrap .aikey-overview-task{align-items:flex-start}
+  .aikey-wrap .aikey-overview-task .button{margin-top:4px}
+  .aikey-wrap .aikey-page-search-form input[type="search"]{width:100%;min-width:0}
+  .aikey-wrap .aikey-workbench-footer{flex-wrap:wrap;gap:10px;padding:11px}
+  .aikey-wrap .aikey-workbench-footer .button{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .aikey-wrap .button,.aikey-wrap .aikey-primary-links a,.aikey-wrap .aikey-panel input,
+  .aikey-wrap .aikey-panel textarea,.aikey-wrap .aikey-panel select{transition:none}
+}
+
+/* Visual review: mobile navigation discoverability and compact metrics. */
+.aikey-wrap .aikey-nav-scroll-hint{display:none;margin:4px 4px 0;padding:2px 4px;color:#667993;font-size:11px;line-height:1.5}
+@media(max-width:600px){
+  .aikey-wrap .aikey-nav-scroll-hint{display:block}
+  .aikey-wrap .aikey-grid-4{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .aikey-wrap .aikey-grid-4 .aikey-card{min-width:0;padding:13px 14px}
+  .aikey-wrap .aikey-grid-4 .aikey-card>span{font-size:11.5px}
+  .aikey-wrap .aikey-grid-4 .aikey-card>strong{font-size:22px;letter-spacing:-.02em;overflow-wrap:anywhere}
+  .aikey-wrap .aikey-grid-4 .aikey-card p{font-size:11.5px;line-height:1.5}
+  .aikey-wrap .aikey-workbench-links .button{white-space:normal}
+}
+@media(max-width:350px){.aikey-wrap .aikey-grid-4{grid-template-columns:1fr}}
+
+/* Article manager: prevent character-by-character wrapping on mobile. */
+.aikey-wrap .aikey-article-table-scroll{overflow-x:auto;overscroll-behavior-inline:contain}
+.aikey-wrap .aikey-article-table-scroll .aikey-article-table{min-width:1080px;table-layout:fixed}
+.aikey-wrap .aikey-article-table-scroll .aikey-article-table th:first-child{width:260px}
+.aikey-wrap .aikey-article-table-scroll .aikey-article-table td:first-child{word-break:normal;overflow-wrap:break-word}
+.aikey-wrap .aikey-article-table-hint{display:none;margin:4px 0 8px;color:#667993;font-size:12px}
+@media(max-width:850px){.aikey-wrap .aikey-article-table-hint{display:block}}
+
+/* Hide excess native shortcuts without unregistering any WordPress admin page. */
+
+/* Free and Pro have matching navigation positions; absent Pro targets never become dead links. */
+.aikey-wrap .aikey-secondary-links .aikey-nav-unavailable{display:inline-flex;align-items:center;min-height:34px;padding:6px 12px;border:1px solid #e7ebf2;border-radius:7px;color:#8d98a8;background:#f8f9fb;font-size:12.5px;font-weight:600;cursor:not-allowed}
+@media(max-width:600px){.aikey-wrap .aikey-secondary-links .aikey-nav-unavailable{font-size:12px;padding:6px 9px}}
+
+
+/*
+ * Multilingual management and Pro audit UI: each task is an isolated card.
+ * No functional changes, no viewport-wide overflow and no external assets.
+ */
+.aikey-wrap .aikey-language-panel,
+.aikey-wrap .aikey-pro-audit-panel{
+  padding:23px 25px;
+  margin:0 0 17px;
+  overflow-x:auto;
+}
+.aikey-wrap .aikey-language-panel h2,
+.aikey-wrap .aikey-pro-audit-panel h2{
+  font-size:17px;
+  font-weight:700;
+  color:#213653;
+  line-height:1.45;
+  margin:0 0 12px;
+}
+.aikey-wrap .aikey-language-panel .aikey-panel-head{margin-bottom:14px}
+.aikey-wrap .aikey-language-panel > form,
+.aikey-wrap .aikey-pro-audit-panel > form{max-width:100%;margin:14px 0 0}
+.aikey-wrap .aikey-language-panel > form + form{border-top:1px solid #e7edf5;padding-top:14px}
+.aikey-wrap .aikey-language-panel .aikey-language-field-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+  margin:15px 0;
+}
+.aikey-wrap .aikey-language-panel .aikey-language-field-grid>label,
+.aikey-wrap .aikey-language-panel .aikey-language-field-row>label{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:6px;
+  min-width:0;
+  color:#344b68;
+  font-weight:650;
+  font-size:12.5px;
+}
+.aikey-wrap .aikey-language-panel .aikey-language-field-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px 26px;
+  align-items:end;
+  margin:15px 0;
+}
+.aikey-wrap .aikey-language-panel .aikey-language-field-row>label:first-child{
+  width:min(100%,275px);
+}
+.aikey-wrap .aikey-language-panel :is(input:not([type="checkbox"]),select,textarea),
+.aikey-wrap .aikey-pro-audit-panel :is(input:not([type="checkbox"]),select,textarea){
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  min-height:39px;
+  padding:8px 11px;
+  border:1px solid #cbd7e8;
+  border-radius:8px;
+  background:#fff;
+  color:#263b57;
+  font:inherit;
+  box-shadow:none;
+}
+.aikey-wrap .aikey-language-panel .aikey-language-field-row .aikey-language-checkbox{
+  display:inline-flex;
+  flex-direction:row;
+  gap:9px;
+  align-items:center;
+  min-height:40px;
+  font-size:13px;
+}
+.aikey-wrap .aikey-language-panel :is(input:not([type="checkbox"]),select,textarea):focus,
+.aikey-wrap .aikey-pro-audit-panel :is(input:not([type="checkbox"]),select,textarea):focus{
+  outline:none;
+  border-color:#517bd6;
+  box-shadow:0 0 0 3px rgba(49,87,217,.12);
+}
+.aikey-wrap .aikey-language-panel>table.widefat{min-width:650px;margin-top:11px}
+.aikey-wrap .aikey-language-panel .aikey-language-lookup{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:end;
+}
+.aikey-wrap .aikey-language-panel .aikey-language-lookup label{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  min-width:min(100%,270px);
+  font-weight:650;
+  color:#354964;
+}
+.aikey-wrap .aikey-language-panel .aikey-language-lookup .button{align-self:end}
+.aikey-wrap .aikey-pro-audit-panel .aikey-field-label{
+  display:block;
+  color:#344b68;
+  font-weight:650;
+  margin:14px 0 8px;
+}
+.aikey-wrap .aikey-pro-audit-panel textarea{width:100%;max-width:100%;line-height:1.6}
+.aikey-wrap .aikey-pro-audit-panel>table.widefat{min-width:600px}
+.aikey-wrap .aikey-geo-selection{
+  box-sizing:border-box;
+  max-height:245px;
+  overflow-y:auto;
+  border:1px solid #d8e2ef;
+  border-radius:9px;
+  padding:8px 12px;
+  background:#f9fbff;
+}
+.aikey-wrap .aikey-geo-choice{
+  display:flex;
+  gap:10px;
+  align-items:start;
+  padding:9px 6px;
+  border-bottom:1px solid #e7edf6;
+  line-height:1.5;
+}
+.aikey-wrap .aikey-geo-choice:last-child{border-bottom:0}
+.aikey-wrap .aikey-geo-choice input[type="checkbox"]{margin-top:3px;flex:0 0 auto}
+.aikey-wrap .aikey-pro-audit-panel form>p{margin:12px 0}
+.aikey-wrap .aikey-language-panel form>p.description{margin-top:12px;max-width:850px}
+.aikey-wrap .aikey-language-panel :is(label,button,summary),
+.aikey-wrap .aikey-pro-audit-panel :is(label,button,summary){scroll-margin-top:72px}
+@media(max-width:760px){
+  .aikey-wrap .aikey-language-panel,
+  .aikey-wrap .aikey-pro-audit-panel{padding:17px 16px}
+  .aikey-wrap .aikey-language-panel .aikey-language-field-grid{
+    grid-template-columns:minmax(0,1fr);
+    gap:12px;
+  }
+}
+
+/* Keyboard-focusable audit tables and a discoverable swipe hint for narrow screens. */
+@media (max-width:850px){
+  .aikey-wrap .aikey-table-scroll:not(.aikey-article-table-scroll)::before{
+    content:"左右滑动查看完整表格";
+    display:block;
+    color:#5b6f8c;
+    background:#f8faff;
+    padding:7px 11px;
+    font-size:11.5px;
+    line-height:1.5;
+    border-bottom:1px solid #e8eef6;
+  }
+}

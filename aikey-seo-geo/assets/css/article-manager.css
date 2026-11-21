@@ -1,0 +1,216 @@
+.aikey-article-page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.aikey-article-page-head h1 { margin-top: 4px; }
+.aikey-article-page-head > .button { margin-top: 6px; flex: 0 0 auto; }
+
+.aikey-article-filter-panel { padding: 16px 18px; }
+.aikey-article-filter-form {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 180px auto;
+  gap: 10px;
+  align-items: center;
+}
+.aikey-article-table td { vertical-align: middle !important; }
+
+/*
+ * The global admin shell intentionally caps most plugin screens at 1240px.
+ * The article editor needs more horizontal room for long-form content while
+ * retaining a dedicated publish column, so only this workspace is widened.
+ */
+.aikey-article-editor-wrap { max-width: 1500px; }
+
+.aikey-article-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 20px;
+  align-items: start;
+}
+.aikey-article-grid main,
+.aikey-article-grid aside { min-width: 0; }
+.aikey-article-grid aside { align-self: stretch; }
+
+/*
+ * WordPress core gives unclassed form controls a narrow default width (about
+ * 25em). Article Manager has several native inputs without .large-text, so the
+ * form must own its field sizing instead of relying on core defaults.
+ */
+.aikey-article-form .aikey-field-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.aikey-article-form .aikey-field input[type="text"],
+.aikey-article-form .aikey-field input[type="url"],
+.aikey-article-form .aikey-field input[type="email"],
+.aikey-article-form .aikey-field input[type="number"],
+.aikey-article-form .aikey-field input[type="search"],
+.aikey-article-form .aikey-field select,
+.aikey-article-form .aikey-field textarea {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.aikey-article-editor-card .wp-editor-wrap,
+.aikey-article-editor-card .wp-editor-container,
+.aikey-article-editor-card .wp-editor-area {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+.aikey-article-editor-card .wp-editor-wrap { margin-top: 14px; }
+.aikey-article-editor-card .wp-editor-container { border-color: #cbd5e1; }
+.aikey-article-editor-card .mce-tinymce {
+  width: 100% !important;
+  max-width: none !important;
+  box-shadow: none;
+}
+
+/* Publish panel: reserve the grid column, then pin the card to the viewport. */
+.aikey-article-publish-panel {
+  position: sticky;
+  top: 46px;
+  z-index: 20;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, .08);
+}
+.aikey-article-publish-panel.is-aikey-floating {
+  position: fixed !important;
+  top: var(--aikey-article-float-top, 46px) !important;
+  left: var(--aikey-article-float-left, auto) !important;
+  width: var(--aikey-article-float-width, 330px) !important;
+  max-height: var(--aikey-article-float-max-height, calc(100vh - 64px)) !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+.aikey-article-heading-tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 12px 0 8px;
+  padding: 11px 12px;
+  border: 1px solid #dde3ec;
+  border-radius: 9px;
+  background: #f8fafc;
+}
+.aikey-article-heading-tools .description { flex: 1 1 360px; margin: 0; }
+
+.aikey-article-featured-preview { margin: 8px 0 10px; min-height: 48px; }
+.aikey-article-featured-preview img { display: block; max-width: 100%; height: auto; border-radius: 9px; }
+.aikey-article-media-actions,
+.aikey-article-secondary-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.aikey-article-tax-box {
+  max-height: 220px;
+  overflow: auto;
+  padding: 10px 12px;
+  border: 1px solid #d8dee8;
+  border-radius: 8px;
+  background: #fff;
+}
+.aikey-article-tax-box label { display: block; margin: 0 0 8px; line-height: 1.5; }
+.aikey-article-tax-box label:last-child { margin-bottom: 0; }
+
+.aikey-article-takeover {
+  margin: 16px 0;
+  padding: 12px 13px;
+  border: 1px solid #e6bd63;
+  border-radius: 9px;
+  background: #fff8e6;
+}
+.aikey-article-takeover p { margin: 6px 0 0; font-size: 12.5px; line-height: 1.6; color: #75550d; }
+.aikey-article-block-warning { border-left-color: #d99b31 !important; }
+.aikey-article-save-button { width: 100% !important; }
+.aikey-article-counter { float: right; color: #64748b; }
+.aikey-article-seogeo-card .aikey-field-grid > .aikey-field { margin: 0; }
+.aikey-article-editor-wrap .required { color: #b91c1c; }
+
+@media (max-width: 1050px) {
+  .aikey-article-grid { grid-template-columns: 1fr; }
+  .aikey-article-grid aside { align-self: auto; }
+  .aikey-article-publish-panel,
+  .aikey-article-publish-panel.is-aikey-floating {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    width: auto !important;
+    max-height: none !important;
+    overflow: visible;
+    transform: none !important;
+    margin: 16px 0 !important;
+    box-shadow: 0 3px 14px rgba(23, 32, 51, .035);
+  }
+  .aikey-article-filter-form { grid-template-columns: 1fr 160px auto; }
+}
+
+@media (max-width: 700px) {
+  .aikey-article-page-head { flex-direction: column; }
+  .aikey-article-filter-form { grid-template-columns: 1fr; }
+  .aikey-article-filter-form .button { justify-self: start; }
+  .aikey-article-form .aikey-field-grid,
+  .aikey-article-seogeo-card .aikey-field-grid { grid-template-columns: 1fr; }
+}
+
+.aikey-article-slug-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+.aikey-article-slug-row .button { white-space: nowrap; }
+.aikey-article-slug-status {
+  min-height: 18px;
+  margin: 7px 0 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #64748b;
+}
+.aikey-article-slug-status.is-loading { color: #475569; }
+.aikey-article-slug-status.is-success { color: #166534; }
+.aikey-article-slug-status.is-warning { color: #92400e; }
+.aikey-article-slug-status.is-error { color: #b91c1c; }
+.aikey-article-slug-preview {
+  margin: 7px 0 0;
+  overflow-wrap: anywhere;
+}
+.aikey-article-slug-preview code {
+  white-space: normal;
+  word-break: break-word;
+}
+.aikey-article-slug-unlock {
+  display: block;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid #f0c36d;
+  border-radius: 8px;
+  background: #fff8e6;
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  .aikey-article-slug-row { grid-template-columns: 1fr; }
+  .aikey-article-slug-row .button { justify-self: start; }
+}
+
+.aikey-article-image-import-status {
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border-left: 3px solid #94a3b8;
+  background: #f8fafc;
+  color: #475569;
+  line-height: 1.55;
+}
+.aikey-article-image-import-status.is-loading { border-left-color: #64748b; color: #475569; }
+.aikey-article-image-import-status.is-success { border-left-color: #15803d; color: #166534; background: #f0fdf4; }
+.aikey-article-image-import-status.is-warning { border-left-color: #d97706; color: #92400e; background: #fffbeb; }
+.aikey-article-image-import-status.is-error { border-left-color: #b91c1c; color: #991b1b; background: #fef2f2; }
