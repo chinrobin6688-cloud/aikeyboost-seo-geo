@@ -38,7 +38,7 @@ There are no paid license restrictions on the functionality distributed with thi
 3. Review the sitemap and SEO metadata settings for your WordPress installation.
 4. For multilingual sites, register only real languages and link existing translated pages before enabling hreflang.
 5. Connect external search or AI services only if you intend to use them. Do not activate overlapping SEO metadata modules in multiple SEO plugins.
-6. In the GitHub edition, the two Basic & Compatibility checkboxes cover force SEO takeover and data retention (both ON on new installations, existing choices preserved on upgrade). Aikeyboost front-end credit is included automatically and has no administrator toggle in this edition. Read the public distribution notice below before installation.
+6. Review the Basic & Compatibility options for SEO takeover and data retention. Both default to enabled for new installations; existing saved choices are preserved.
 
 == Frequently Asked Questions ==
 
@@ -50,9 +50,6 @@ No. It links genuine existing translations and manages SEO language metadata; it
 
 = Are external services required? =
 No. Basic SEO, schema and sitemap functions run without an external Aikeyboost account. Some optional integrations need provider credentials or approved site verification.
-
-= Will an Aikeyboost link appear on my visitors' pages? =
-Yes. This GitHub distribution automatically adds a visible, nofollow Aikeyboost attribution link on public pages, without a settings checkbox. GeneratePress appends the credit inline to the existing copyright and registration line with inherited typography; other themes use a copyright-line fallback only when a suitable line exists. Theme credits and required legal notices are not changed or removed. Only one attribution is emitted per request by the plugin. Previously saved opt-outs no longer affect this output. The source remains GPL-licensed and can be modified and redistributed according to the license.
 
 = Can this plugin coexist with another SEO plugin? =
 On new installations, Aikeyboost SEO takeover is enabled by default even if another SEO plugin is detected. This may duplicate SEO tags or sitemap output. Disable takeover or the other SEO plugin to avoid conflicts. Existing saved takeover choices are respected.
@@ -80,17 +77,11 @@ Referral/crawler statistics are stored locally as aggregate source, path, hit an
 3. Multilingual page translation groups.
 4. Structured data and public content settings.
 
-Screenshots are planned for the WordPress.org assets repository after obtaining approval.
-
-== GitHub public distribution note ==
-
-This GitHub distribution includes a mandatory-on-in-the-distributed-code, visible Aikeyboost attribution link on public pages. There is no checkbox to disable it. Existing saved credit opt-outs are intentionally ignored after upgrading. The link uses GeneratePress's generate_credits hook to join the existing copyright line, with no separate block, stylesheet or font override; other themes use an existing copyright-line fallback. The plugin never deletes or rewrites another developer's copyright or required legal notices. Some custom themes may not invoke these WordPress hooks, so display cannot be guaranteed in every theme. This is open-source code under GPL-2.0-or-later, which permits modification and redistribution: the link cannot be legally guaranteed to remain on modified copies.
-
-IMPORTANT: Do not submit this edition unchanged to the WordPress.org Plugin Directory: its policy requires visitor-facing credits to be optional and OFF by default. The default SEO takeover may also conflict with other SEO plugins.
+Screenshots illustrate the administration workflow; actual appearance may vary by theme and WordPress setup.
 
 == Changelog ==
 
 = 2.3.11 =
-* Render the attribution as inline text on the SAME GeneratePress copyright/ICP line with the theme's original font, color and spacing; delete obsolete credit CSS.
-* Preserve existing footers and legal notices; prevent duplicate plugin attribution.
-* Retain the complete free SEO/GEO functionality and database schema 17. No Pro code or data migration.
+* Improve compatibility with the GeneratePress footer layout and simplify unused frontend assets.
+* Keep existing SEO/GEO modules, multilingual connections and database schema version 17 unchanged.
+* Validate PHP 8.0, 8.2 and 8.3 compatibility and WordPress ZIP package integrity.
