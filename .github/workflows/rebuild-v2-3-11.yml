@@ -1,0 +1,78 @@
+name: Replace v2.3.11 installer in place
+
+on:
+  push:
+    paths:
+      - '.github/workflows/rebuild-v2-3-11.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  regression:
+    name: PHP ${{ matrix.php }} footer compatibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.0', '8.2', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - name: Lint all plugin files and verify footer integration
+        shell: bash
+        run: |
+          set -euo pipefail
+          find aikey-seo-geo tests -name '*.php' -type f -print0 | xargs -0 -n1 php -l
+          php tests/footer-credit-smoke.php
+
+  replace:
+    name: Build and replace SAME v2.3.11 Release asset
+    needs: regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Rebuild complete installer from current source
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Eq '^ \* Version:[[:space:]]+2\.3\.11$' aikey-seo-geo/aikey-seo-geo.php
+          grep -Eq '^Stable tag: 2\.3\.11$' aikey-seo-geo/readme.txt
+          mkdir -p dist
+          rm -f dist/*.zip
+          zip -q -r dist/aikey-seo-geo-v2.3.11.zip aikey-seo-geo/ -x '*.DS_Store'
+          sha256sum dist/aikey-seo-geo-v2.3.11.zip > SHA256SUMS.txt
+          unzip -t dist/aikey-seo-geo-v2.3.11.zip
+          unzip -Z1 dist/aikey-seo-geo-v2.3.11.zip | grep -qx 'aikey-seo-geo/aikey-seo-geo.php'
+          cmp aikey-seo-geo/src/Core/Plugin.php <(unzip -p dist/aikey-seo-geo-v2.3.11.zip aikey-seo-geo/src/Core/Plugin.php)
+          cmp aikey-seo-geo/assets/css/footer-credit.css <(unzip -p dist/aikey-seo-geo-v2.3.11.zip aikey-seo-geo/assets/css/footer-credit.css)
+          unzip -p dist/aikey-seo-geo-v2.3.11.zip aikey-seo-geo/src/Core/Plugin.php | grep -q "'generate_credits'"
+          unzip -p dist/aikey-seo-geo-v2.3.11.zip aikey-seo-geo/assets/css/footer-credit.css | grep -q 'background: transparent'
+          sha256sum --check SHA256SUMS.txt
+      - name: Update dist ZIP and SHA256 manifest without changing version
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f dist/aikey-seo-geo-v2.3.11.zip
+          git add SHA256SUMS.txt
+          git commit -m "release: replace v2.3.11 installer with integrated footer hotfix"
+          git push origin HEAD:main
+      - name: Replace existing Release asset (do NOT create any new version)
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release view v2.3.11 --json tagName,isDraft,isPrerelease
+          gh release upload v2.3.11 dist/aikey-seo-geo-v2.3.11.zip --clobber
+          gh release view v2.3.11 --json tagName,assets | jq -e '.tagName == "v2.3.11" and (any(.assets[]; .name == "aikey-seo-geo-v2.3.11.zip" and .size > 100000))'
