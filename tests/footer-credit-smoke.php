@@ -81,7 +81,7 @@ namespace {
 
     do_action( 'wp_enqueue_scripts' );
     check( 1 === count( $GLOBALS['aikey_test_styles'] ), 'Footer CSS was not enqueued' );
-    check( '2.3.11' === $GLOBALS['aikey_test_styles'][0]['version'], 'Plugin version changed unexpectedly' );
+    check( '2.3.11-footer-inline' === $GLOBALS['aikey_test_styles'][0]['version'], 'Footer CSS cache was not invalidated' );
 
     $css = file_get_contents( dirname( __DIR__ ) . '/aikey-seo-geo/assets/css/footer-credit.css' );
     check( str_contains( $css, 'background: transparent' ), 'Standalone footer background is still present' );
