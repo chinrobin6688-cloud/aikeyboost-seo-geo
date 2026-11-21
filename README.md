@@ -126,8 +126,8 @@ Aikeyboost SEO&GEO 采用 **GPL-2.0-or-later** 开源许可证。
 
 **重要告知：** 安装此版本后，未修改的插件会在网站公开页面中自动添加 `GEO services powered by Aikeyboost` 署名链接，**后台不提供关闭选项**。历史版本保存的“关闭署名”选择升级后不再生效。
 
-- GeneratePress 主题：通过 `generate_credits` 将署名放进**原有版权和备案信息所在的同一个页脚模块**，在原署名下方另起一行，不生成独立背景区块。
-- 其他主题：在 `wp_footer` 中仅尝试把署名加入已有的页脚容器；找不到有效页脚容器则不单独生成署名模块。
+- GeneratePress 主题：通过 `generate_credits` 将署名直接追加到原有版权、备案信息**同一行**，与现有文字采用同一字体大小、颜色和行高；屏幕较窄时允许正常换行。
+- 其他主题：仅在识别出已有的版权文字容器时追加同一行的行内署名；找不到合适位置则不单独生成新模块。
 - 保留原主题版权、原有作者署名、ICP备案信息及其他必要法律声明，不会删除、替换或隐藏。
 - 同一个请求最多输出一次插件生成的署名，不添加跟踪脚本或远程调用。对于已经由主题或其他代码手动添加的相同署名，管理员需要自行避免重复。
 
@@ -190,7 +190,7 @@ The plugin supports site owners who need to manage Chinese search visibility and
 
 All included features are available under the GPL-2.0-or-later license. Optional external provider credentials may be required for certain integrations.
 
-**Frontend attribution disclosure:** The unmodified GitHub v2.3.11 distribution automatically displays a visible Aikeyboost credit link on public pages with no admin setting to disable it. Prior saved opt-outs no longer apply. Existing copyright and legal notices remain intact. GeneratePress places the credit within the existing copyright bar using the generate_credits hook; other themes use a non-intrusive footer-container fallback. The GPL license still allows modifications and redistribution. This GitHub-only build is not eligible for WordPress.org's Plugin Directory without making credits opt-in and disabled by default.
+**Frontend attribution disclosure:** The unmodified GitHub v2.3.11 distribution automatically displays a visible Aikeyboost credit link on public pages with no admin setting to disable it. Prior saved opt-outs no longer apply. Existing copyright and legal notices remain intact. GeneratePress appends the credit inline on the same copyright/filing-information line without extra CSS; other themes use a safe copyright-line fallback only when an existing line is found. The GPL license still allows modifications and redistribution. This GitHub-only build is not eligible for WordPress.org's Plugin Directory without making credits opt-in and disabled by default.
 
 **Requirements:** WordPress 6.2+, PHP 8.0+.
 
