@@ -91,48 +91,7 @@ IMPORTANT: Do not submit this edition unchanged to the WordPress.org Plugin Dire
 == Changelog ==
 
 = 2.3.10 =
-* Automatically output a clearly disclosed Aikeyboost front-end attribution link with no administration checkbox. Previously saved footer credit opt-outs are no longer honored.
-* On GeneratePress use an early footer-content hook so Aikeyboost appears before theme/footer credits; use an early wp_footer fallback for other compatible WordPress themes.
-* Do not overwrite, hide or remove other themes' copyright or mandatory legal notices. Prevent duplicate plugin output.
-* No database changes, Pro modules, or SEO/GEO logic changes. GitHub distribution only; not eligible for WordPress.org Plugin Directory with a forced link.
-
-= 2.3.9 =
-* Render voluntary Aikeyboost attribution as a new independent line rather than replacing GeneratePress or widget copyright text.
-* Prefer GeneratePress footer insertion with one-time wp_footer fallback for other WordPress themes. Do not duplicate output if both hooks fire.
-* Load a tiny, isolated frontend CSS stylesheet only when attribution is enabled; preserve saved opt-outs.
-* Keep all v2.3.8 SEO/GEO features and database version 17 unchanged.
-
-= 2.3.8 =
-* Publish the complete v2.3.6 stable feature set on GitHub without any Pro-only extension.
-* Restore the v2.3.6 defaults on new installs: forced SEO takeover ON, data retention ON, voluntary Aikeyboost footer credit ON. Preserve previously saved choices.
-* Clarify the third checkbox's user-facing label; no front-end SEO behavior changes.
-* Clarify China-focused WordPress SEO/GEO positioning in the plugin description and documentation.
-* Database version remains 17; the private development repository and Pro modules remain excluded.
-
-= 2.3.6 =
-* Default the three Basic & Compatibility checkboxes to enabled on new installations: SEO takeover, retain data on uninstall, and optional frontend Aikeyboost attribution.
-* Preserve previously saved on/off settings on upgrade and honor explicit checkbox changes thereafter.
-* Keep database schema version 17 and all existing SEO/GEO functionality unchanged. Private distribution only: WordPress.org requires public-site credit links to be off by default.
-
-= 2.3.5 =
-* Preserve v2.3.2 stable functionality with the integrated Prism administration design.
-* Correct notice and page-subtitle CSS ownership so warnings, errors, success and information messages remain readable on light cards and dark headers.
-* Remove the previous ineffective helper-class style overrides. No database, shortcode, frontend, provider or feature change.
-
-
-= 2.3.3 =
-* Update the plugin administration visual presentation with the Aikeyboost Prism styles: consistent panels, richer depth, responsive navigation and readable forms.
-* Keep the complete v2.3.2 Free/stable feature set and all existing writable workflows unchanged. No Pro dependency, licensing gate, database migration or frontend asset change.
-* Preserve all SEO/GEO keys, menu URLs, public routes and compatibility with WordPress 6.2 and PHP 8.0.
-
-
-= 2.3.2 =
-* Make optional visitor-facing developer attribution disabled by default, requiring explicit administrator consent.
-* Prepare the public WordPress.org description and external-service/privacy disclosures.
-* Preserve all existing SEO/GEO functionality and multilingual relationships.
-
-= 2.3.1 =
-* Add localized Organization/WebSite records, registered locale route recognition and a bounded /llms-full.txt endpoint.
-
-= 2.3.0 =
-* Introduce database-backed multilingual translation groups and opt-in ID-based hreflang.
+* Free open-source WordPress SEO/GEO toolkit for Chinese websites and multilingual international sites.
+* Includes metadata, XML Sitemap, Schema.org, redirects, SEO/GEO content analysis, Baidu-related tools, and hreflang page associations.
+* GitHub edition adds standalone Aikeyboost frontend attribution without rewriting existing theme copyrights or required legal notices.
+* Database version 17; no paid extensions included.
