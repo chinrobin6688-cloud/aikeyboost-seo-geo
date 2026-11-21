@@ -4,15 +4,17 @@ Tags: seo, sitemap, schema, multilingual, ai-search
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.3.7
+Stable tag: 2.3.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-SEO tools for international and Chinese WordPress websites: metadata, sitemaps, structured data, multilingual URL links and crawl diagnostics.
+Designed for Chinese WordPress site builders: Baidu and Chinese search SEO/GEO, metadata, sitemaps, schema, multilingual hreflang and optional global search integrations.
 
 == Description ==
 
-Aikeyboost SEO & GEO brings established WordPress SEO tools and optional AI-search-readiness workflows into one plugin. It is designed for site owners managing Chinese search traffic alongside international sites.
+Aikeyboost SEO&GEO is designed specifically for WordPress website builders in China: small business websites, Chinese-language corporate websites, Chinese SEO service providers and companies expanding overseas. It combines locally useful Chinese search-engine settings with established WordPress SEO, multilingual site management and optional AI-search-readiness workflows.
+
+为中国 WordPress 建站用户专门设计，兼顾中国大陆网站与外贸多语言独立站。聚焦百度、搜狗、360 搜索、神马和中国 AI 搜索生态的可抓取性、站点验证、网站内容与实体信息，同时支持 Google、Bing、IndexNow、Sitemap、Schema 和 hreflang。部分平台没有公开的通用主动提交 API，插件不会虚构这些接口；GEO 优化不保证被 AI 引用或获得排名。
 
 Core features:
 * Edit SEO titles, descriptions, canonical URLs, robots indexing directives and social sharing metadata.
@@ -36,7 +38,7 @@ There are no paid license restrictions on the functionality distributed with thi
 3. Review the sitemap and SEO metadata settings for your WordPress installation.
 4. For multilingual sites, register only real languages and link existing translated pages before enabling hreflang.
 5. Connect external search or AI services only if you intend to use them. Do not activate overlapping SEO metadata modules in multiple SEO plugins.
-6. On new installations, forced SEO takeover and visitor-facing developer attribution are disabled by default. Existing saved choices are preserved when updating.
+6. In the public GitHub edition, all three Basic & Compatibility checkboxes are ON by default on new installations: force SEO takeover, keep data on uninstall, and optional Aikeyboost footer attribution. Review them in Basic Settings; you can disable either optional output at any time. Previously saved choices are preserved on upgrade.
 
 == Frequently Asked Questions ==
 
@@ -50,10 +52,10 @@ No. It links genuine existing translations and manages SEO language metadata; it
 No. Basic SEO, schema and sitemap functions run without an external Aikeyboost account. Some optional integrations need provider credentials or approved site verification.
 
 = Will an Aikeyboost link appear on my visitors' pages? =
-No. Visitor-facing attribution is off by default and can be enabled only by the site administrator in Basic Settings. It modifies only matching existing footer credits in supported themes. Existing saved choices are preserved on update.
+On a new installation, the optional attribution setting starts enabled. It only replaces matching existing footer credits where supported by the active theme; it does not create a new footer on every theme. The administrator can disable it in Basic Settings. Existing saved disabled choices remain disabled after updating.
 
 = Can this plugin coexist with another SEO plugin? =
-New installations leave forced takeover disabled by default. Aikeyboost detects several other SEO plugins and defers overlapping output where appropriate. Avoid enabling two plugins that both output metadata or sitemap routes. Previously saved takeover choices are respected.
+On new installations, Aikeyboost SEO takeover is enabled by default even if another SEO plugin is detected. This may duplicate SEO tags or sitemap output. Disable takeover or the other SEO plugin to avoid conflicts. Existing saved takeover choices are respected.
 
 == External Services ==
 
@@ -80,18 +82,25 @@ Referral/crawler statistics are stored locally as aggregate source, path, hit an
 
 Screenshots are planned for the WordPress.org assets repository after obtaining approval.
 
+== GitHub public distribution note ==
+
+This GitHub source edition intentionally keeps the v2.3.6 stable defaults: the two optional output settings (forced SEO takeover and front-end attribution) start ON for new installations. They are individually configurable, and explicit saved choices remain unchanged on upgrades. The attribution only replaces existing matching credits on supported themes; it does not insert a new footer on all sites.
+
+IMPORTANT: This edition is distributed via GitHub and must not be submitted unchanged to the WordPress.org Plugin Directory. WordPress.org requires visitor-facing credits and links to be OFF by default and opt-in. The default SEO takeover may conflict with other SEO plugins. Review these settings before using the plugin on a production site.
+
 == Changelog ==
 
-= 2.3.7 =
-* Publish a public-source edition based on stable v2.3.6, without private repository history or Pro modules.
-* Default forced SEO takeover and visitor-facing Aikeyboost credits to OFF for fresh public installations; existing user choices are preserved.
-* Keep data retention ON by default. No database schema or public-route changes.
-* Include the GPL-2.0-or-later license text and public release documentation.
+= 2.3.8 =
+* Publish the complete v2.3.6 stable feature set on GitHub without any Pro-only extension.
+* Restore the v2.3.6 defaults on new installs: forced SEO takeover ON, data retention ON, voluntary Aikeyboost footer credit ON. Preserve previously saved choices.
+* Clarify the third checkbox's user-facing label; no front-end SEO behavior changes.
+* Clarify China-focused WordPress SEO/GEO positioning in the plugin description and documentation.
+* Database version remains 17; the private development repository and Pro modules remain excluded.
 
 = 2.3.6 =
 * Default the three Basic & Compatibility checkboxes to enabled on new installations: SEO takeover, retain data on uninstall, and optional frontend Aikeyboost attribution.
 * Preserve previously saved on/off settings on upgrade and honor explicit checkbox changes thereafter.
-* Keep database schema version 17 and all existing SEO/GEO functionality unchanged. Those defaults were specific to the private build; the public v2.3.7 edition instead requires explicit opt-in for takeover and attribution.
+* Keep database schema version 17 and all existing SEO/GEO functionality unchanged. Private distribution only: WordPress.org requires public-site credit links to be off by default.
 
 = 2.3.5 =
 * Preserve v2.3.2 stable functionality with the integrated Prism administration design.

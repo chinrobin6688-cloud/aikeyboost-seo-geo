@@ -31,12 +31,11 @@ final class Settings {
 
     public static function defaults(): array {
         return array(
-            // Public distribution: avoid overriding another SEO plugin or adding
-            // a visitor-facing attribution without site-owner consent.
-            // Previously saved choices still take precedence on upgrade.
+            // Public GitHub distribution follows the v2.3.6 stable defaults.
+            // Existing saved choices take precedence on upgrades.
             'keep_data_on_uninstall' => true,
-            'force_takeover'         => false,
-            'show_footer_credit'     => false, // Explicit opt-in only; never force a public attribution link.
+            'force_takeover'         => true,
+            'show_footer_credit'     => true, // Optional; the administrator can disable it. Not suitable as a WordPress.org default.
             'modules'                => self::MODULE_DEFAULTS,
             'seo_meta'               => array(
                 'title_template'            => '%title% %sep% %sitename%',
