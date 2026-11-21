@@ -1,0 +1,46 @@
+name: Plugin quality checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  php-checks:
+    name: PHP ${{ matrix.php }} syntax and footer regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.0', '8.2', '8.3']
+    steps:
+      - name: Checkout public source
+        uses: actions/checkout@v4
+      - name: Configure PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+      - name: Lint all plugin and test PHP files
+        run: find aikey-seo-geo tests -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Run footer attribution regression assertions
+        run: php tests/footer-credit-smoke.php
+
+  package-check:
+    name: Verify distributable WordPress ZIP
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout public source
+        uses: actions/checkout@v4
+      - name: Verify published package checksums
+        run: sha256sum --check SHA256SUMS.txt
+      - name: Check latest ZIP integrity and WordPress plugin entry point
+        run: |
+          unzip -t dist/aikey-seo-geo-v2.3.10.zip
+          unzip -Z1 dist/aikey-seo-geo-v2.3.10.zip | grep -qx 'aikey-seo-geo/aikey-seo-geo.php'
