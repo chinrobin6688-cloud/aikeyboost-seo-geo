@@ -4,7 +4,7 @@ Tags: seo, sitemap, schema, multilingual, ai-search
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 2.3.10
+Stable tag: 2.3.11
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,7 +52,7 @@ No. It links genuine existing translations and manages SEO language metadata; it
 No. Basic SEO, schema and sitemap functions run without an external Aikeyboost account. Some optional integrations need provider credentials or approved site verification.
 
 = Will an Aikeyboost link appear on my visitors' pages? =
-Yes. This GitHub distribution automatically adds a visible, nofollow Aikeyboost attribution link on public pages, without a settings checkbox. It puts the line before other footer content using GeneratePress's available hook; other compatible themes use the standard wp_footer fallback, which may appear after the theme's own copyright. Theme credits and required legal notices are not changed or removed. Only one attribution is emitted per request by the plugin. Previously saved opt-outs no longer affect this output. The source remains GPL-licensed and can be modified and redistributed according to the license.
+Yes. This GitHub distribution automatically adds a visible, nofollow Aikeyboost attribution link on public pages, without a settings checkbox. It renders at the very end of the WordPress wp_footer hook, after standard theme footer elements and legal notices. Theme credits and required legal notices are not changed or removed. Only one attribution is emitted per request by the plugin. Previously saved opt-outs no longer affect this output. The source remains GPL-licensed and can be modified and redistributed according to the license.
 
 = Can this plugin coexist with another SEO plugin? =
 On new installations, Aikeyboost SEO takeover is enabled by default even if another SEO plugin is detected. This may duplicate SEO tags or sitemap output. Disable takeover or the other SEO plugin to avoid conflicts. Existing saved takeover choices are respected.
@@ -84,14 +84,13 @@ Screenshots are planned for the WordPress.org assets repository after obtaining 
 
 == GitHub public distribution note ==
 
-This GitHub distribution includes a mandatory-on-in-the-distributed-code, visible Aikeyboost attribution link on public pages. There is no checkbox to disable it. Existing saved credit opt-outs are intentionally ignored after upgrading. On GeneratePress the link is inserted before other footer content; for other themes it is rendered at the earliest standard wp_footer hook. The plugin never deletes or rewrites another developer's copyright or required legal notices. Some custom themes may not invoke these WordPress hooks, so display cannot be guaranteed in every theme. This is open-source code under GPL-2.0-or-later, which permits modification and redistribution: the link cannot be legally guaranteed to remain on modified copies.
+This GitHub distribution includes a mandatory-on-in-the-distributed-code, visible Aikeyboost attribution link on public pages. There is no checkbox to disable it. Existing saved credit opt-outs are intentionally ignored after upgrading. The link uses a late wp_footer callback to appear beneath the theme footer and legal notices on compliant themes. The plugin never deletes or rewrites another developer's copyright or required legal notices. Some custom themes may not invoke these WordPress hooks, so display cannot be guaranteed in every theme. This is open-source code under GPL-2.0-or-later, which permits modification and redistribution: the link cannot be legally guaranteed to remain on modified copies.
 
 IMPORTANT: Do not submit this edition unchanged to the WordPress.org Plugin Directory: its policy requires visitor-facing credits to be optional and OFF by default. The default SEO takeover may also conflict with other SEO plugins.
 
 == Changelog ==
 
-= 2.3.10 =
-* Free open-source WordPress SEO/GEO toolkit for Chinese websites and multilingual international sites.
-* Includes metadata, XML Sitemap, Schema.org, redirects, SEO/GEO content analysis, Baidu-related tools, and hreflang page associations.
-* GitHub edition adds standalone Aikeyboost frontend attribution without rewriting existing theme copyrights or required legal notices.
-* Database version 17; no paid extensions included.
+= 2.3.11 =
+* Place the independent footer credit after theme footer content, copyright text and ICP registration notices using a late WordPress wp_footer callback.
+* Preserve existing footers and legal notices; prevent duplicate plugin attribution.
+* Retain the complete free SEO/GEO functionality and database schema 17. No Pro code or data migration.
