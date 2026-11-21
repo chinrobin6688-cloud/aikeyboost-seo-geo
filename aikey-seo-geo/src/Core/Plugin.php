@@ -54,22 +54,18 @@ final class Plugin {
     }
 
     /**
-     * Add an independent, optional footer attribution without touching the
-     * theme's existing copyright, widgets or footer markup.
-     *
-     * GeneratePress exposes a dedicated hook inside its footer. Other themes,
-     * including block themes, use the standard wp_footer fallback. The shared
-     * guard prevents duplicate output when a theme fires both hooks.
+     * The GitHub edition adds its own attribution before other footer content
+     * when a dedicated theme hook exists. Never rewrite theme credits.
+     * wp_footer is a generic fallback; the shared guard avoids duplicates.
      */
     public static function register_footer_credit(): void {
-        if ( is_admin() || ! (bool) Settings::get( 'show_footer_credit', false ) ) { return; }
+        if ( is_admin() ) { return; }
         add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_footer_credit_style' ) );
-        add_action( 'generate_after_footer', array( self::class, 'render_footer_credit' ), 20 );
-        add_action( 'wp_footer', array( self::class, 'render_footer_credit' ), 20 );
+        add_action( 'generate_before_footer_content', array( self::class, 'render_footer_credit' ), 1 );
+        add_action( 'wp_footer', array( self::class, 'render_footer_credit' ), 1 );
     }
 
     public static function enqueue_footer_credit_style(): void {
-        if ( ! (bool) Settings::get( 'show_footer_credit', false ) ) { return; }
         wp_enqueue_style(
             'aikey-seo-geo-footer-credit',
             AIKEY_SEO_GEO_URL . 'assets/css/footer-credit.css',
@@ -79,8 +75,7 @@ final class Plugin {
     }
 
     public static function render_footer_credit(): void {
-        if ( self::$footer_credit_rendered || is_admin()
-            || ! (bool) Settings::get( 'show_footer_credit', false ) ) {
+        if ( self::$footer_credit_rendered || is_admin() ) {
             return;
         }
         self::$footer_credit_rendered = true;

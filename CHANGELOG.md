@@ -1,5 +1,14 @@
 # Changelog
 
+## v2.3.10 — 2026-11-20
+
+- The GitHub distribution now automatically emits a visible Aikeyboost footer credit, with no corresponding settings checkbox; existing saved opt-outs are no longer honored.
+- On GeneratePress, priority-1 `generate_before_footer_content` places Aikeyboost before other footer content. Other themes use priority-1 `wp_footer` as a best-effort fallback.
+- Preserve other developer credits, theme copyright, legal notices and page content. Keep one-time output, no tracking calls, and standalone isolated CSS.
+- Remove the old backend checkbox, the obsolete setting default and its write path without deleting existing stored WordPress options.
+- No SEO/GEO feature changes, database migration or Pro code. 72 PHP, 7 JS, 10 CSS and 23 dedicated regression assertions passed; full live WordPress integration is not yet complete.
+- GitHub-only distribution, not eligible for WordPress.org Directory as-is due to mandatory front-end credits.
+
 ## v2.3.9 — 2026-11-20
 
 - Optional Aikeyboost frontend credit now **adds a separate line** and never replaces theme copyright or footer widgets.

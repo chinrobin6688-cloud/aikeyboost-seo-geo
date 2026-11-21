@@ -1,15 +1,17 @@
 <?php
-/** Standalone regression for the optional frontend attribution hooks (php tests/footer-credit-smoke.php). */
+/** Standalone regression for the GitHub edition's visible mandatory-at-source attribution. */
 namespace {
     $GLOBALS['aikey_test_hooks'] = array();
     $GLOBALS['aikey_test_styles'] = array();
     $GLOBALS['aikey_test_is_admin'] = false;
-
+    $GLOBALS['aikey_assertions'] = 0;
     function add_action( string $hook, callable $callback, int $priority = 10 ): void {
-        $GLOBALS['aikey_test_hooks'][ $hook ][] = $callback;
+        $GLOBALS['aikey_test_hooks'][ $hook ][] = array( 'callback' => $callback, 'priority' => $priority );
     }
     function do_action( string $hook ): void {
-        foreach ( $GLOBALS['aikey_test_hooks'][ $hook ] ?? array() as $callback ) { $callback(); }
+        $actions = $GLOBALS['aikey_test_hooks'][ $hook ] ?? array();
+        usort( $actions, static fn( $a, $b ) => $a['priority'] <=> $b['priority'] );
+        foreach ( $actions as $item ) { ( $item['callback'] )(); }
     }
     function wp_enqueue_style( string $handle, string $url, array $deps = array(), string $version = '' ): void {
         $GLOBALS['aikey_test_styles'][] = compact( 'handle', 'url', 'deps', 'version' );
@@ -17,19 +19,21 @@ namespace {
     function is_admin(): bool { return $GLOBALS['aikey_test_is_admin']; }
     function esc_url( string $url ): string { return htmlspecialchars( $url, ENT_QUOTES, 'UTF-8' ); }
     function esc_html( string $value ): string { return htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' ); }
-    function test_check( bool $condition, string $message ): void {
+    function check( bool $condition, string $message ): void {
         if ( ! $condition ) { throw new \RuntimeException( $message ); }
-        $GLOBALS['aikey_assertions'] = ( $GLOBALS['aikey_assertions'] ?? 0 ) + 1;
+        ++$GLOBALS['aikey_assertions'];
     }
     define( 'ABSPATH', __DIR__ );
-    define( 'AIKEY_SEO_GEO_VERSION', '2.3.9' );
-    define( 'AIKEY_SEO_GEO_URL', 'https://demo.invalid/wp-content/plugins/aikey-seo-geo/' );
+    define( 'AIKEY_SEO_GEO_VERSION', '2.3.10' );
+    define( 'AIKEY_SEO_GEO_URL', 'https://example.test/wp-content/plugins/aikey-seo-geo/' );
 }
 namespace AIKEY\SeoGeo\Core {
     final class Settings {
-        public static bool $credit = true;
-        public static function get( string $key, mixed $default = null ): mixed {
-            return 'show_footer_credit' === $key ? self::$credit : $default;
+        public static int $reads = 0;
+        public static function get( string $key, mixed $fallback = null ): mixed {
+            ++self::$reads;
+            if ( 'show_footer_credit' === $key ) { return false; }
+            return $fallback;
         }
     }
 }
@@ -40,67 +44,64 @@ namespace {
     $reset = static function () use ( $plugin ): void {
         $GLOBALS['aikey_test_hooks'] = array();
         $GLOBALS['aikey_test_styles'] = array();
-        $prop = new \ReflectionProperty( $plugin, 'footer_credit_rendered' );
-        $prop->setValue( false );
+        ( new \ReflectionProperty( $plugin, 'footer_credit_rendered' ) )->setValue( false );
     };
 
-    // Disabled: no hooks, no extra front-end requests or markup.
+    // Even previously saved false/opt-out must not suppress attribution.
     $reset();
-    $settings::$credit = false;
     $plugin::register_footer_credit();
-    test_check( ! $GLOBALS['aikey_test_hooks'], 'Disabled setting registered hooks' );
-    ob_start(); do_action( 'wp_footer' );
-    test_check( '' === ob_get_clean(), 'Disabled setting emitted markup' );
-
-    // Do not register front-end hooks inside the WordPress administrator.
-    $reset(); $settings::$credit = true; $GLOBALS['aikey_test_is_admin'] = true;
-    $plugin::register_footer_credit();
-    test_check( ! $GLOBALS['aikey_test_hooks'], 'Admin request registered hooks' );
-    $GLOBALS['aikey_test_is_admin'] = false;
-
-    // Enabled: register semantic theme/fallback hooks but NEVER theme filters.
-    $reset(); $settings::$credit = true;
-    $plugin::register_footer_credit();
-    foreach ( array( 'generate_after_footer', 'wp_footer', 'wp_enqueue_scripts' ) as $hook ) {
-        test_check( 1 === count( $GLOBALS['aikey_test_hooks'][ $hook ] ?? array() ), 'Missing required hook: ' . $hook );
+    check( 0 === $settings::$reads, 'An obsolete user setting still gates the mandatory attribution' );
+    foreach ( array( 'generate_before_footer_content', 'wp_footer', 'wp_enqueue_scripts' ) as $hook ) {
+        check( count( $GLOBALS['aikey_test_hooks'][ $hook ] ?? array() ) === 1, 'Missing hook: ' . $hook );
     }
-    test_check( ! isset( $GLOBALS['aikey_test_hooks']['generate_copyright'] ), 'Copyright replacement hook registered' );
-    test_check( ! isset( $GLOBALS['aikey_test_hooks']['widget_block_content'] ), 'Widget replacement hook registered' );
-    $original = '<span>Built with GeneratePress</span>';
-    test_check( '<span>Built with GeneratePress</span>' === $original, 'Theme copyright changed' );
+    check( ! isset( $GLOBALS['aikey_test_hooks']['generate_after_footer'] ), 'Legacy hook still used' );
+    check( ! isset( $GLOBALS['aikey_test_hooks']['generate_copyright'] ), 'Theme copyright filter registered' );
+    check( ! isset( $GLOBALS['aikey_test_hooks']['widget_block_content'] ), 'Widget content filter registered' );
+    check( 1 === $GLOBALS['aikey_test_hooks']['generate_before_footer_content'][0]['priority'], 'Not first in GeneratePress footer' );
+    check( 1 === $GLOBALS['aikey_test_hooks']['wp_footer'][0]['priority'], 'Not early in generic footer' );
+
+    // The plugin prints before other GeneratePress footer attribution callbacks.
+    add_action( 'generate_before_footer_content', static function(): void {
+        echo '<span class="theme-credit">Original theme credit</span>';
+    }, 10 );
+    ob_start();
+    do_action( 'generate_before_footer_content' );
+    do_action( 'wp_footer' );
+    $html = ob_get_clean();
+    check( substr_count( $html, 'class="aikey-seo-geo-footer-credit"' ) === 1, 'Duplicate GeneratePress credit' );
+    check( strpos( $html, 'aikey-seo-geo-footer-credit' ) < strpos( $html, 'Original theme credit' ), 'Aikeyboost not displayed ahead of other credits' );
+    check( str_contains( $html, 'Original theme credit' ), 'Theme attribution was erased' );
+    check( str_contains( $html, 'href="https://aikeyboost.com/" rel="nofollow"' ), 'Missing nofollow credit link' );
 
     do_action( 'wp_enqueue_scripts' );
-    test_check( 1 === count( $GLOBALS['aikey_test_styles'] ), 'Credit stylesheet missing or duplicated' );
-    $style = $GLOBALS['aikey_test_styles'][0];
-    test_check( 'aikey-seo-geo-footer-credit' === $style['handle'], 'Wrong CSS handle' );
-    test_check( str_ends_with( $style['url'], '/assets/css/footer-credit.css' ), 'Wrong CSS URL' );
-    test_check( '2.3.9' === $style['version'], 'Wrong asset cache version' );
+    check( 1 === count( $GLOBALS['aikey_test_styles'] ), 'Frontend style not enqueued' );
+    check( $GLOBALS['aikey_test_styles'][0]['version'] === '2.3.10', 'Stale CSS cache version' );
 
-    // GeneratePress calls its footer hook before wp_footer; must output once.
-    ob_start();
-    do_action( 'generate_after_footer' );
-    do_action( 'wp_footer' );
-    $markup = ob_get_clean();
-    test_check( 1 === substr_count( $markup, 'aikey-seo-geo-footer-credit' ), 'Duplicate output in GeneratePress' );
-    test_check( 1 === substr_count( $markup, 'href="https://aikeyboost.com/"' ), 'Missing or duplicate attribution link' );
-    test_check( str_contains( $markup, 'GEO services powered by' ), 'Attribution copy was changed' );
-    test_check( ! str_contains( $markup, 'Built with' ), 'Theme copyright was rewritten' );
-
-    // Generic classic/block themes without GeneratePress hook use wp_footer.
-    $reset(); $settings::$credit = true;
+    // Generic themes: the standard wp_footer callback still works once.
+    $reset();
     $plugin::register_footer_credit();
     ob_start(); do_action( 'wp_footer' ); do_action( 'wp_footer' );
-    $fallback = ob_get_clean();
-    test_check( 1 === substr_count( $fallback, 'aikey-seo-geo-footer-credit' ), 'Generic theme did not output exactly once' );
+    $html=ob_get_clean();
+    check( 1 === substr_count( $html, 'class="aikey-seo-geo-footer-credit"' ), 'Generic theme doubled attribution' );
+    check( 1 === substr_count( $html, 'href="https://aikeyboost.com/"' ), 'Generic theme lost attribution' );
 
-    // When an option is switched off during a request, no residual output.
-    $reset(); $settings::$credit = true;
+    // Backend should have no public hooks or output even if invoked manually.
+    $reset();
+    $GLOBALS['aikey_test_is_admin'] = true;
     $plugin::register_footer_credit();
-    $settings::$credit = false;
-    ob_start(); do_action( 'generate_after_footer' ); do_action( 'wp_footer' );
-    test_check( '' === ob_get_clean(), 'Stored opt-out was ignored' );
-    do_action( 'wp_enqueue_scripts' );
-    test_check( ! $GLOBALS['aikey_test_styles'], 'Disabled style unexpectedly enqueued' );
+    check( ! $GLOBALS['aikey_test_hooks'], 'Admin request registered frontend hooks' );
+    ob_start(); $plugin::render_footer_credit();
+    check( '' === ob_get_clean(), 'Admin request emitted credit markup' );
+    $GLOBALS['aikey_test_is_admin'] = false;
 
-    echo 'Footer credit regression PASS: ' . $GLOBALS['aikey_assertions'] . " checks\n";
+    // The deprecated UI checkbox is absent from the HTML and save handler.
+    $admin_src = file_get_contents( dirname( __DIR__ ) . '/aikey-seo-geo/src/Admin/Admin.php' );
+    $plugin_src = file_get_contents( dirname( __DIR__ ) . '/aikey-seo-geo/src/Core/Plugin.php' );
+    $settings_src = file_get_contents( dirname( __DIR__ ) . '/aikey-seo-geo/src/Core/Settings.php' );
+    check( ! str_contains( $admin_src, 'name="show_footer_credit"' ), 'Admin checkbox remains visible' );
+    check( ! str_contains( $admin_src, '$settings[\'show_footer_credit\']' ), 'Admin still persists the obsolete checkbox' );
+    check( ! str_contains( $plugin_src, 'Settings::get( \'show_footer_credit\'' ), 'Old setting still controls output' );
+    check( ! str_contains( $settings_src, "'show_footer_credit'" ), 'Obsolete setting still a default' );
+
+    echo 'Mandatory credit regression PASS: ' . $GLOBALS['aikey_assertions'] . " checks\n";
 }

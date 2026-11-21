@@ -35,7 +35,6 @@ final class Settings {
             // Existing saved choices take precedence on upgrades.
             'keep_data_on_uninstall' => true,
             'force_takeover'         => true,
-            'show_footer_credit'     => true, // Optional; the administrator can disable it. Not suitable as a WordPress.org default.
             'modules'                => self::MODULE_DEFAULTS,
             'seo_meta'               => array(
                 'title_template'            => '%title% %sep% %sitename%',
